@@ -1,0 +1,26 @@
+{
+  "name": "fantasy_baseball_viewer",
+  "version": "1.0.0",
+  "description": "Shows baseball players' fantasy statistics",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "preinstall": "./node_modules/bower/bin/bower install",
+    "start": "nodemon server.js"
+  },
+  "author": "daniel-chung",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.1",
+    "dotenv": "^2.0.0",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "morgan": "^1.7.0",
+    "mysql": "^2.10.2",
+    "pg": "^4.5.3"
+  },
+  "devDependencies": {
+    "bower": "^1.7.9"
+  }
+}

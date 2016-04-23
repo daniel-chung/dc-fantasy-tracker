@@ -1,0 +1,15 @@
+/* /public/css/main.css */
+
+body {
+  font-family: sans-serif;
+  font-size: 14px;
+  padding: 5em;
+  text-align: center;
+}
+
+div#main {
+  width: 80%;
+  text-align: left;
+  border: 1px solid purple;
+}
+

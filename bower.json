@@ -1,0 +1,7 @@
+{
+  "name": "fantasy-baseball-viewer",
+  "version": "1.0.0",
+  "dependencies": {
+    "jquery": "latest"
+  }
+}
