@@ -13,6 +13,7 @@ module.exports = function(app, pg) {
 
   app.route('/api/alldata')
     .get(function(req, res) {
+      pg.defaults.ssl = true;
 
       // Connect to pg
       pg.connect(process.env.DATABASE_URL, function(err, client, done) {
@@ -23,7 +24,7 @@ module.exports = function(app, pg) {
           return res.status(500).json({ success: false, data: err});
         }
 
-        var results = client.query("SELECT * FROM stats;");
+        var results = client.query("SELECT * FROM player;");
 
         // Stream results back one row at a time
         results.on('row', function(row) {
