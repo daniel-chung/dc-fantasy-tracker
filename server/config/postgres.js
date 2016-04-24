@@ -9,7 +9,7 @@ require('dotenv').load();  // allows us to use .env for security
 
 
 // Initialize database ---------------------------------------------------------
-//pg.defaults.ssl = true;
+pg.defaults.ssl = true;
 
 pg.connect(process.env.DATABASE_URL, function(err, client) {
   if (err) throw err;
@@ -54,9 +54,9 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
     var eachLine = Promise.promisify(lineReader.eachLine);
 
     eachLine(datafile, function(line) {
-      console.log(line);
+      //console.log(line);
       var rowdata = line.split(',');
-      console.log('rowdata', rowdata);
+      //console.log('rowdata', rowdata);
       var insertresult = insertRow(client, 'players', playersSchema, rowdata);
     }).then(function() {
       console.log('done');
