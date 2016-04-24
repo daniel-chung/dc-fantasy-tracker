@@ -24,7 +24,7 @@ module.exports = function(app, pg) {
           return res.status(500).json({ success: false, data: err});
         }
 
-        var results = client.query("SELECT * FROM player;");
+        var results = client.query("SELECT * FROM players;");
 
         // Stream results back one row at a time
         results.on('row', function(row) {
