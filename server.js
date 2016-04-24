@@ -32,7 +32,8 @@ app.use(session({
 }));
 
 
-// Setup mysql -----------------------------------------------------------------
+// Setup postgres sql ----------------------------------------------------------
+//require('./server/config/postgres')(pg);
 
 
 // Routing links ---------------------------------------------------------------
@@ -41,7 +42,7 @@ app.use(express.static(__dirname + '/public'));
 
 
 // Setup Express routes --------------------------------------------------------
-require('./server/routes.js')(app);
+require('./server/routes')(app, pg);
 
 
 // Start server ----------------------------------------------------------------

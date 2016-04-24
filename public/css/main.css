@@ -10,6 +10,6 @@ body {
 div#main {
   width: 80%;
   text-align: left;
-  border: 1px solid purple;
+  /*border: 1px solid purple;*/
 }
 
