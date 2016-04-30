@@ -1,0 +1,11 @@
+<div>
+  <h1>Player list</h1>
+  <h3>Click on the buttons below to find out more info:</h3>
+
+  <a ng-repeat='player in players' ui-sref="player({pid: player.id})">
+    <button type="button" class="btn btn-info fbs-players-btn">
+      {{player.name}}
+    </button>
+  </a>
+
+</div>

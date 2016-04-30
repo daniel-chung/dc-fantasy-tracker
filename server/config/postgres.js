@@ -17,6 +17,10 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
   if (err) throw err;
   console.log('Connected to postgres! Getting schemas...');
 
+
+
+/* Players */
+
   // DROP table to start fresh
   var sqldelete = "DROP TABLE IF EXISTS players;";
   client.query(sqldelete)
@@ -66,8 +70,8 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
     }).catch(function(err) {
       console.error(err);
       client.end();
-  });
-};
+    });
+  };
 
 
   // Function for inserting sql data
@@ -84,6 +88,99 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
       });
     return true;
   }
+
+
+
+
+/* Batting */
+
+  // DROP table to start fresh
+  var sqldelete = "DROP TABLE IF EXISTS batting;";
+  client.query(sqldelete)
+    .on('error', function(err) {
+      console.log('Error while deleting table:', err);
+      client.end();
+    })
+    .on('end', function(result) {
+      console.log('Deletion successful');
+      createBattingTable();
+    });
+
+
+  // Create table
+  function createBattingTable() {
+    var sqlcreate = "";
+    sqlcreate += "CREATE TABLE batting ( ";
+    sqlcreate += "YEAR INT NOT NULL,";
+    sqlcreate += "AGE INT NOT NULL,";
+    sqlcreate += "LG TEXT NOT NULL,";
+    sqlcreate += "G INT NOT NULL,";
+    sqlcreate += "PA INT NOT NULL,";
+    sqlcreate += "AB INT NOT NULL,";
+    sqlcreate += "R INT NOT NULL,";
+    sqlcreate += "H INT NOT NULL,";
+    sqlcreate += "H2B INT NOT NULL,";
+    sqlcreate += "H3B INT NOT NULL,";
+    sqlcreate += "HR INT NOT NULL,";
+    sqlcreate += "RBI INT NOT NULL,";
+    sqlcreate += "SB INT NOT NULL,";
+    sqlcreate += "CS INT NOT NULL,";
+    sqlcreate += "BB INT NOT NULL,";
+    sqlcreate += "SO INT NOT NULL,";
+    sqlcreate += "BA DOUBLE PRECISION NOT NULL,";
+    sqlcreate += "OBP DOUBLE PRECISION NOT NULL,";
+    sqlcreate += "SLG DOUBLE PRECISION NOT NULL,";
+    sqlcreate += "OPS DOUBLE PRECISION NOT NULL,";
+    sqlcreate += "POS TEXT NOT NULL,";
+    sqlcreate += "NAME TEXT NOT NULL,";
+    sqlcreate += "ID INT NOT NULL";
+    sqlcreate += ");";
+    client.query(sqlcreate)
+      .on('error', function(err) {
+        console.log('Error while creating table:', err);
+        client.end();
+      })
+      .on('end', function(result) {
+        console.log('Creation successful');
+        insertBattingRows();
+      });
+  };
+
+
+  // Read in the datafile to populate our SQL table
+  function insertBattingRows() {
+    var datafile = __dirname + '/rizzo.csv';
+    var playersSchema = [
+      'Year','Age','Lg','G','PA','AB','R','H','H2B','H3B','HR','RBI',
+      'SB','CS','BB','SO','BA','OBP','SLG','OPS','Pos','name','id'];
+    var eachLine = Promise.promisify(lineReader.eachLine);
+    var counter = -1;
+    eachLine(datafile, function(line) {
+      counter++;
+      if (counter > 0) {
+        //console.log(line);
+        var rowdata = line.split(',');
+        //console.log('rowdata', rowdata);
+        var insertresult = insertRow(client, 'batting', playersSchema, rowdata);
+      }
+    }).then(function() {
+      console.log('done');
+      setTimeout(function() { client.end(); }, 500);
+    }).catch(function(err) {
+      console.error(err);
+      client.end();
+  });
+};
+
+
+
+
+
+
+
+
+
+
 
 });
 

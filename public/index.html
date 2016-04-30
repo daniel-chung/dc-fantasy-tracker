@@ -1,6 +1,6 @@
 <!-- /public/index.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="fbs.application">
 <head>
   <meta charset="UTF-8">
   <title>Fantasy baseball statistics</title>
@@ -13,20 +13,39 @@
 <body>
 
   <div id="main">
+    <fbs-navbar></fbs-navbar>
+
     <h1>Fantasy baseball statistics</h1>
-    <h3>Click on the buttons below to find out more info:</h3>
 
     <div id="playerlist">
+      <div ui-view></div>
+
     </div>
   </div>
 
 <!-- JS -->
   <!-- FRAMEWORKS -->
+  <!-- Prod 
   <script src="libs/jquery/dist/jquery.min.js"></script>
   <script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="libs/angular/angular.min.js"></script>
+  <script src="libs/angular-ui-router/release/angular-ui-router.min.js"></script>
+  -->
+  <script src="libs/jquery/dist/jquery.js"></script>
+  <script src="libs/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="libs/angular/angular.js"></script>
+  <script src="libs/angular-ui-router/release/angular-ui-router.js"></script>
+ 
+ 
+  <!-- ANGULAR CUSTOM -->
+  <script src="ng-app/app.js"></script>
+  <script src="ng-app/components/players/players-controller.js"></script>
+  <script src="ng-app/components/players/players-factory.js"></script>
 
-  <!-- CUSTOM -->
-  <script src="js/app.js"></script>
+  <script src="ng-app/components/player/player-controller.js"></script>
+  <script src="ng-app/components/player/player-factory.js"></script>
+
+  <script src="ng-app/components/navbar/navbar-directive.js"></script>
 
 </body>
 </html>

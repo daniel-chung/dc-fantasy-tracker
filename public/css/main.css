@@ -13,3 +13,17 @@ div#main {
   /*border: 1px solid purple;*/
 }
 
+nav.fbs-navbar {
+  background-color: #5bc0de;
+}
+
+nav.fbs-navbar * {
+  color: #fff;
+}
+
+
+/* Players component styles */
+button.fbs-players-btn {
+  margin-right: 20px;	
+}
+
