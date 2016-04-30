@@ -9,7 +9,9 @@ require('dotenv').load();  // allows us to use .env for security
 
 
 // Initialize database ---------------------------------------------------------
-pg.defaults.ssl = true;
+// For testing locally
+if (process.env.VERSION != "DEV")
+  pg.defaults.ssl = true;
 
 pg.connect(process.env.DATABASE_URL, function(err, client) {
   if (err) throw err;

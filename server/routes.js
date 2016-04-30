@@ -13,7 +13,9 @@ module.exports = function(app, pg) {
 
   app.route('/api/alldata')
     .get(function(req, res) {
-      pg.defaults.ssl = true;
+      // For testing locally
+      if (process.env.VERSION != "DEV")
+        pg.defaults.ssl = true;
 
       // Connect to pg
       pg.connect(process.env.DATABASE_URL, function(err, client, done) {
