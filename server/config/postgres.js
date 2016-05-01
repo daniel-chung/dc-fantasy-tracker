@@ -18,18 +18,17 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
   console.log('Connected to postgres! Getting schemas...');
 
 
-
 /* Players */
 
   // DROP table to start fresh
   var sqldelete = "DROP TABLE IF EXISTS players;";
   client.query(sqldelete)
     .on('error', function(err) {
-      console.log('Error while deleting table:', err);
+      console.log('Error while deleting table 1:', err);
       client.end();
     })
     .on('end', function(result) {
-      console.log('Deletion successful');
+      console.log('Deletion successful 1');
       createTable();
     });
 
@@ -43,11 +42,11 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
     sqlcreate += ");";
     client.query(sqlcreate)
       .on('error', function(err) {
-        console.log('Error while creating table:', err);
+        console.log('Error while creating table 1:', err);
         client.end();
       })
       .on('end', function(result) {
-        console.log('Creation successful');
+        console.log('Creation successful 1');
         insertRows();
       });
   };
@@ -65,8 +64,8 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
       //console.log('rowdata', rowdata);
       var insertresult = insertRow(client, 'players', playersSchema, rowdata);
     }).then(function() {
-      console.log('done');
-      setTimeout(function() { client.end(); }, 500);
+      console.log('done 1');
+//      setTimeout(function() { client.end(); }, 500);
     }).catch(function(err) {
       console.error(err);
       client.end();
@@ -83,13 +82,11 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
     sqlquery += "VALUES ('" + data.join("','") + "');";
     pgclient.query(sqlquery)
       .on('error', function(err) {
-        console.log('Error inserting data:', err);
+        console.log('Error inserting data 1:', err);
         return false;
       });
     return true;
   }
-
-
 
 
 /* Batting */
@@ -98,11 +95,11 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
   var sqldelete = "DROP TABLE IF EXISTS batting;";
   client.query(sqldelete)
     .on('error', function(err) {
-      console.log('Error while deleting table:', err);
+      console.log('Error while deleting table 2:', err);
       client.end();
     })
     .on('end', function(result) {
-      console.log('Deletion successful');
+      console.log('Deletion successful 2');
       createBattingTable();
     });
 
@@ -111,6 +108,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
   function createBattingTable() {
     var sqlcreate = "";
     sqlcreate += "CREATE TABLE batting ( ";
+    sqlcreate += "ID INT NOT NULL,";
     sqlcreate += "YEAR INT NOT NULL,";
     sqlcreate += "AGE INT NOT NULL,";
     sqlcreate += "LG TEXT NOT NULL,";
@@ -132,16 +130,15 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
     sqlcreate += "SLG DOUBLE PRECISION NOT NULL,";
     sqlcreate += "OPS DOUBLE PRECISION NOT NULL,";
     sqlcreate += "POS TEXT NOT NULL,";
-    sqlcreate += "NAME TEXT NOT NULL,";
-    sqlcreate += "ID INT NOT NULL";
+    sqlcreate += "NAME TEXT NOT NULL";
     sqlcreate += ");";
     client.query(sqlcreate)
       .on('error', function(err) {
-        console.log('Error while creating table:', err);
+        console.log('Error while creating table 2:', err);
         client.end();
       })
       .on('end', function(result) {
-        console.log('Creation successful');
+        console.log('Creation successful 2');
         insertBattingRows();
       });
   };
@@ -149,10 +146,10 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
 
   // Read in the datafile to populate our SQL table
   function insertBattingRows() {
-    var datafile = __dirname + '/rizzo.csv';
+    var datafile = __dirname + '/playerstats.csv';
     var playersSchema = [
-      'Year','Age','Lg','G','PA','AB','R','H','H2B','H3B','HR','RBI',
-      'SB','CS','BB','SO','BA','OBP','SLG','OPS','Pos','name','id'];
+      'id', 'Year','Age','Lg','G','PA','AB','R','H','H2B','H3B','HR','RBI',
+      'SB','CS','BB','SO','BA','OBP','SLG','OPS','Pos','name'];
     var eachLine = Promise.promisify(lineReader.eachLine);
     var counter = -1;
     eachLine(datafile, function(line) {
@@ -160,12 +157,25 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
       if (counter > 0) {
         //console.log(line);
         var rowdata = line.split(',');
+        //clean up floats
+        for (var j = 4; j < 17; j++) {
+          rowdata[j] = rowdata[j].replace(/\.\d*/, '');
+          if (rowdata[j] == '') {
+            rowdata[j] = '0';
+          }
+        }
+        for (var k = 17; k < 21; k++) {
+          if (rowdata[k] == '') {
+            rowdata[k] = '0.0'; 
+          }
+        }
         //console.log('rowdata', rowdata);
         var insertresult = insertRow(client, 'batting', playersSchema, rowdata);
       }
     }).then(function() {
-      console.log('done');
-      setTimeout(function() { client.end(); }, 500);
+      console.log('done 2');
+      setTimeout(function() { client.end(); }, 5000);
+
     }).catch(function(err) {
       console.error(err);
       client.end();
