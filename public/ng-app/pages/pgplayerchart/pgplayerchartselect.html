@@ -1,6 +1,6 @@
 <div>
   <!-- Drop down menu to toggle between d3 visualizations -->
-  <select class="c-select" ng-model="chartstat" ng-change="updateChart()">
+  <select class="fbs-pgplayerchartselect" ng-model="chartstat" ng-change="updateChart()">
     <option value="r">R</option>
     <option value="hr">HR</option>
     <option value="rbi">RBI</option>
@@ -9,7 +9,7 @@
   </select>
 
   <!-- Drop down menu to toggle between raw and adjusted stats -->
-  <select class="c-select" ng-model="checkbox" ng-change="updateChart()">
+  <select class="fbs-pgplayerchartselect" ng-model="checkbox" ng-change="updateChart()">
     <option value="raw">Raw stats</option>
     <option value="adjused">Adjusted</option>
   </select>

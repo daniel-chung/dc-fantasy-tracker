@@ -22,6 +22,14 @@ select {
 } 
 
 
+/** Unselected button **/
+button.fbs-btn-unselected {
+  background-color: #fff;
+  border-color: #777;
+  color: #777;
+}
+
+
 /** Nav bar **/
 
 nav.fbs-navbar {
@@ -52,3 +60,29 @@ div.fbs-pgplayer-title a {
   vertical-align: middle;
 }
 
+
+/* For testing position
+div.fbs-pgplayer-content * {
+  border: 1px solid red;
+}*/
+div.fbs-pgplayer-content {
+  position: fixed;
+  display: inline-block;
+}
+div.fbs-pgplayer-menu {
+  display: block;
+  width: 10em;
+  position: absolute;
+}
+div.fbs-pgplayer-chart {
+  position: absolute;
+  left: 10em;
+  width: 50vw;
+}
+
+
+
+/** Player chart selector **/
+select.fbs-pgplayerchartselect {
+  margin-top: 1em;
+}

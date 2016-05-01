@@ -7,14 +7,18 @@
 
     <!-- Navigate to the table view -->
     <a ui-sref="pgplayer.table({pid: playerId})">
-      <button type="button" class="btn btn-info">
+      <button type="button" class="btn btn-info"
+              ng-class="fbsBtnTable" 
+              ng-click="changeClass('fbsBtnTable');">
         table
       </button>
     </a>
 
     <!-- Navigate to the chart view -->
     <a ui-sref="pgplayer.chart({pid: playerId})">
-      <button type="button" class="btn btn-info">
+      <button type="button" class="btn btn-info"
+              ng-class="fbsBtnChart" 
+              ng-click="changeClass('fbsBtnChart');">
         chart
       </button>
     </a>
@@ -22,10 +26,16 @@
   </div>
   <br>
 
-  <!-- Drop down menu to toggle between charts -->
-  <div ui-view="dropdown"></div>
+  <div class="fbs-pgplayer-content">
+    <div class="fbs-pgplayer-menu">
+      <!-- Drop down menu to toggle between charts -->
+      <div ui-view="dropdown" ></div>
+    </div>
 
-  <!-- Nested UI views -->
-  <div ui-view="main"></div>
+    <!-- Nested UI views -->
+    <div class="fbs-pgplayer-chart">
+      <div ui-view="main"></div>
+    </div>
+  </div>
 
 </div>
