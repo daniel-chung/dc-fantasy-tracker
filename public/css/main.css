@@ -10,8 +10,19 @@ body {
 div#main {
   width: 80%;
   text-align: left;
-  /*border: 1px solid purple;*/
 }
+
+select {
+  font-size: 1.2em;
+  background: transparent;
+  height: 2em;
+  width: 5em;
+  padding: .25em;
+  border: 1px solid #ccc;
+} 
+
+
+/** Nav bar **/
 
 nav.fbs-navbar {
   background-color: #5bc0de;
@@ -22,8 +33,22 @@ nav.fbs-navbar * {
 }
 
 
-/* Players component styles */
-button.fbs-players-btn {
+/** Players component styles **/
+button.fbs-pgselect-btn {
   margin-right: 20px;	
+}
+
+
+/** Player styles **/
+div.fbs-pgplayer-title * {
+  display: inline-block;
+}
+div.fbs-pgplayer-title h1 {
+  margin: 0 1em 0 0;
+  vertical-align: middle;
+}
+div.fbs-pgplayer-title a {
+  margin: 0 .5em 0 0;
+  vertical-align: middle;
 }
 

@@ -1,0 +1,1 @@
+// Abstract away the resolve portion in app.js

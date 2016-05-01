@@ -1,36 +1,75 @@
 // /public/ng-app/app.js
 'use strict';
 
-// Load packages ---------------------------------------------------------------
-//var request   = require('request');
-
 
 // Define angular module -------------------------------------------------------
 // Use namespace 'fbs' for fantasy baseball statistics
 var Application = angular.module('fbs.application', [
   'ui.router',
-  'fbs.players',
-  'fbs.players.playersFactory',  // do i need this?
-  'fbs.player',
-  'fbs.navbar'
+  'fbs.pgselect',
+  'fbs.pgplayer',
+  'fbs.navbar',
+  'fbs.pgplayerchart'
 ]);
+
+
+// Create a rootscope variable
+Application.run(function($rootScope) {
+    $rootScope.test = 'placeholder';
+});
 
 
 // Define Routing --------------------------------------------------------------
 Application.config(function ($stateProvider, $urlRouterProvider) {
 
-  $urlRouterProvider.otherwise("/players");
+  $urlRouterProvider.when("/player/:pid", "/player/:pid/table");
+  $urlRouterProvider.otherwise("/");
+
   $stateProvider
-    .state('players', {
-      url: "/players",
-      templateUrl: "ng-app/components/players/players.html",
-      controller: 'fbs.players.playersCtrl'
+    .state('pglanding', {
+      url: "/",
+      templateUrl: "ng-app/pages/pglanding/pglanding.html",
     })
-    .state('player', {
+    .state('pgselect', {
+      url: "/select",
+      templateUrl: "ng-app/pages/pgselect/pgselect.html",
+      controller: 'fbs.pgselect.pgselectCtrl'
+    })
+    .state('pgplayer', {
+      abstract: true,
       url: "/player/:pid",
-      templateUrl: "ng-app/components/player/player.html",
-      controller: 'fbs.player.playerCtrl'
+      templateUrl: "ng-app/pages/pgplayer/pgplayer.html",
+      controller: 'fbs.pgplayer.pgplayerCtrl',
+      resolve: {
+        pgPlayerData: function($http, $stateParams) {
+          return $http.get('/api/' + $stateParams.pid).then(function(response) {
+            return response.data;
+          });
+        }
+      } 
     })
+      .state('pgplayer.table', {
+          url: '/table',
+          views: {
+            'main': {
+              templateUrl: "ng-app/pages/pgplayertable/pgplayertable.html",
+              controller: function($rootScope) { $rootScope.test = 'table'; }
+            }
+          }
+      })
+      .state('pgplayer.chart', {
+          url: '/chart',
+          views: {
+            'dropdown': {
+              templateUrl: "ng-app/pages/pgplayerchart/pgplayerchartselect.html",
+              controller: 'fbs.pgplayerchart.pgplayerchartCtrl'
+            },
+            'main': {
+              templateUrl: "ng-app/pages/pgplayerchart/pgplayerchart.html",
+              controller: 'fbs.pgplayerchart.pgplayerchartCtrl'
+            }
+          }
+      })
   ;
 
 });

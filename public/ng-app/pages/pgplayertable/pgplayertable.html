@@ -1,23 +1,22 @@
-
 <div>
-  <h1>Stats: {{playerStats[0].name}}</h1>
-  
   <table class="table">
     <thead>
       <tr>
         <th>Year</th>
         <th>Age</th>
+        <th>G</th>
         <th>R</th>
         <th>HR</th>
         <th>RBI</th>
         <th>SB</th>
-        <th>obp</th>
+        <th>OBP</th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="stat in playerStats">
         <th scope="row">{{stat.year}}</th>
         <td>{{stat.age}}</td>
+        <td>{{stat.g}}</td>
         <td>{{stat.r}}</td>
         <td>{{stat.hr}}</td>
         <td>{{stat.rbi}}</td>
@@ -26,5 +25,4 @@
       </tr>
     </tbody>
   </table>
-
 </div>

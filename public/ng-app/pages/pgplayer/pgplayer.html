@@ -1,0 +1,30 @@
+<div>
+
+  <div class="fbs-pgplayer-title">
+
+    <!-- Player name title -->
+    <h1>{{playerStats[0].name}}</h1>
+
+    <!-- Navigate to the table view -->
+    <a ui-sref="pgplayer.table({pid: playerId})">
+      <button type="button" class="btn btn-info">
+        table
+      </button>
+    </a>
+
+    <!-- Navigate to the chart view -->
+    <a ui-sref="pgplayer.chart({pid: playerId})">
+      <button type="button" class="btn btn-info">
+        chart
+      </button>
+    </a>
+
+    <!-- Drop down menu to toggle between charts -->
+    <div ui-view="dropdown"></div>
+  </div>
+  <br>
+
+  <!-- Nested UI views -->
+  <div ui-view="main"></div>
+
+</div>

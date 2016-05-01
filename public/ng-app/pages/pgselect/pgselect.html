@@ -1,0 +1,10 @@
+<div>
+  <h1>Player list</h1>
+  <h3>Click on the buttons below to find out more info:</h3>
+
+  <a ng-repeat='player in players' ui-sref="pgplayer.table({pid: player.id})">
+    <button type="button" class="btn btn-info fbs-pgselect-btn">
+      {{player.name}}
+    </button>
+  </a>
+</div>
