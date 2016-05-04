@@ -43,7 +43,8 @@ nav.fbs-navbar * {
 
 /** Players component styles **/
 button.fbs-pgselect-btn {
-  margin-right: 20px;	
+  /*margin-right: 20px;*/
+  margin-bottom: .25em;
 }
 
 
@@ -66,20 +67,19 @@ div.fbs-pgplayer-content * {
   border: 1px solid red;
 }*/
 div.fbs-pgplayer-content {
-  position: fixed;
   display: inline-block;
 }
 div.fbs-pgplayer-menu {
+  position: absolute;
   display: block;
   width: 10em;
-  position: absolute;
 }
 div.fbs-pgplayer-chart {
-  position: absolute;
+  position: relative;
+  overflow: visible;
   left: 10em;
   width: 50vw;
 }
-
 
 
 /** Player chart selector **/

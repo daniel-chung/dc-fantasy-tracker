@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="stat in playerStats">
+      <tr ng-repeat="stat in playerStats | orderBy:'-year'">
         <th scope="row">{{stat.year}}</th>
         <td>{{stat.age}}</td>
         <td>{{stat.g}}</td>
