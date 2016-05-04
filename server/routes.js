@@ -1,80 +1,31 @@
 // /server/routes.js
 'use strict';
 
-// Load packages ---------------------------------------------------------------
-//var request   = require('request');
+// Load controllers ------------------------------------------------------------
+var SqlHandler = require(__dirname + '/controllers/sql-controller.js');
 
+
+// Main routes module ----------------------------------------------------------
 module.exports = function(app, pg) {
 
+
+// Server side routes ----------------------------------------------------------
   app.route('/')
     .get(function(req, res) {
       res.sendFile('index.html');
   });
 
 
-  // API Endpoints -------------------------------------------------------------
+// API Endpoints ---------------------------------------------------------------
+
+  // Instantiate Server side controllers used in the API endpoints
+  var sqlHandler = new SqlHandler(pg);
+
   app.route('/api/alldata')
-    .get(function(req, res) {
-      // For testing locally
-      if (process.env.VERSION != "DEV")
-        pg.defaults.ssl = true;
-
-      // Connect to pg
-      pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-        var data = [];
-        if(err) {
-          done();
-          console.log(err);
-          return res.status(500).json({ success: false, data: err});
-        }
-
-        var results = client.query("SELECT * FROM players;");
-
-        // Stream results back one row at a time
-        results.on('row', function(row) {
-          data.push(row);
-        });
-
-        // After all data is returned, close connection and return results
-        results.on('end', function() {
-          done();
-          return res.json(data);
-        });
-      });
-    });
-
+    .get(sqlHandler.getPlayersAll);
 
   app.route('/api/:id')
-    .get(function(req, res) {
-      // For testing locally
-      if (process.env.VERSION != "DEV")
-        pg.defaults.ssl = true;
-
-      var id = req.params.id;
-
-      // Connect to pg
-      pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-        var data = [];
-        if(err) {
-          done();
-          console.log(err);
-          return res.status(500).json({ success: false, data: err});
-        }
-
-        var results = client.query("SELECT * FROM batting WHERE id = $1;", [id]);
-
-        // Stream results back one row at a time
-        results.on('row', function(row) {
-          data.push(row);
-        });
-
-        // After all data is returned, close connection and return results
-        results.on('end', function() {
-          done();
-          return res.json(data);
-        });
-      });
-    });
+    .get(sqlHandler.getPlayerId);
 
 };
 
