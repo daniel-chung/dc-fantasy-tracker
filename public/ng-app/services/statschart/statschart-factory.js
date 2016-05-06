@@ -57,7 +57,7 @@ angular.module('fbs.statschart', [])
 
       svg.append('path')
         .attr('d', lineFunc(data))
-        .attr('stroke', '#5bc0de')
+        .attr('stroke', 'red')
         .attr('stroke-width', 2)
         .attr('fill', 'none');
     };
@@ -66,8 +66,9 @@ angular.module('fbs.statschart', [])
 
     
     this.drawChart2 = function(data, chartid) {
+      console.log(data);
 
-      var w = 500;
+      var w = 600;
       var h = 300;
       var m = {
         top: 20,
@@ -92,8 +93,14 @@ angular.module('fbs.statschart', [])
       var yRange = d3.scale.linear()
                     .range([h - m.top, m.bottom])
                     .domain([
-                      d3.min(data, function(d) { return d.stat; }),
-                      d3.max(data, function(d) { return d.stat; })
+                      Math.min(
+                        d3.min(data, function(d) { return d.statcomp; }),
+                        d3.min(data, function(d) { return d.stat; })
+                      ),
+                      Math.max(
+                        d3.max(data, function(d) { return d.statcomp; }),
+                        d3.max(data, function(d) { return d.stat; })
+                      )
                     ]);
       var xAxis = d3.svg.axis()
                     .scale(xRange)
@@ -105,7 +112,16 @@ angular.module('fbs.statschart', [])
 
       var lineFunc = d3.svg.line()
                       .x(function(d) { return xRange(d.age); })
+                      .y(function(d) { return yRange(d.statcomp); })
+                      ;
+                      //.interpolate('linear');
+
+      var lineFunc2 = d3.svg.line()
+                      .defined(function(d) { return !isNaN(d.stat); })
+                      .x(function(d) { return xRange(d.age); })
                       .y(function(d) { return yRange(d.stat); })
+
+
                       .interpolate('linear');
 
       svg.append('g')
@@ -117,10 +133,18 @@ angular.module('fbs.statschart', [])
         .call(yAxis);
 
       svg.append('path')
+        .attr("class", "line")
         .attr('d', lineFunc(data))
         .attr('stroke', '#5bc0de')
         .attr('stroke-width', 2)
         .attr('fill', 'none');
+
+      svg.append('path')
+        .attr('d', lineFunc2(data))
+        .attr('stroke', 'red')
+        .attr('stroke-width', 2)
+        .attr('fill', 'none');
+
     };
   });
 

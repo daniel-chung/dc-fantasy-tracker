@@ -4,7 +4,7 @@
 var FbsPgSelect = angular.module('fbs.pgselect', []);
 
 FbsPgSelect.controller('fbs.pgselect.pgselectCtrl', function(
-    $scope, pgselectFactory) {
+    $scope, $interval, pgselectFactory) {
 
   // Initialize the ng-model data for the list of available players
   $scope.players = [];

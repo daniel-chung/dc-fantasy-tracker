@@ -10,10 +10,10 @@ function SqlHandler (pg) {
 
     // For testing locally
     if (process.env.VERSION != "DEV")
-      req.pg.defaults.ssl = true;
+      pg.defaults.ssl = true;
 
     // Connect to Postgres
-    req.pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
 
       var data = [];
       if(err) {
@@ -43,18 +43,43 @@ function SqlHandler (pg) {
   // Get all players -------------------------------------------------------- //
   this.getPlayersAll = function(req, res) {
     req.query = "SELECT * FROM players;";
-    req.pg = pg;
     returnQuery(req, res);
   };  // End get all players method ----------------------------------------- //
 
 
-  // Get player by id -------------------------------------------------------- //
+  // Get player by id ------------------------------------------------------- //
   this.getPlayerId = function(req, res) {
     req.query = "SELECT * FROM batting WHERE id = $1;"
     req.queryVal = req.params.id;
-    req.pg = pg;
     returnQuery(req, res);
-  };  // End get player by id method --------------------------------------- //
+  };  // End get player by id method ---------------------------------------- //
+
+
+  // Get average stats ------------------------------------------------------ //
+  this.getStatsAll = function(req, res) {
+    req.query = 
+      'SELECT ' +
+      '  age, ' +
+      '  r * 162 / g r, ' +
+      '  hr * 162 / g hr, ' +
+      '  rbi * 162 / g rbi, ' +
+      '  sb * 162 / g sb, ' +
+      '  obp ' +
+      'FROM ( ' +
+      '  SELECT ' +
+      '    age, ' +
+      '    sum(g) g, ' +
+      '    sum(r) r, ' +
+      '    sum(hr) hr, ' +
+      '    sum(rbi) rbi, ' +
+      '    sum(sb) sb, ' +
+      '    avg(obp) obp ' +
+      '  FROM batting ' +
+      '  GROUP BY 1' +
+      ') AS a ' +
+      'ORDER BY 1 asc;';
+    returnQuery(req, res);
+  };  // End get player by id method ---------------------------------------- //
 };
   
 
@@ -63,3 +88,4 @@ module.exports = SqlHandler;
 
 
 // EOF -------------------------------------------------------------------------
+

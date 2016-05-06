@@ -27,6 +27,9 @@ module.exports = function(app, pg) {
   app.route('/api/:id')
     .get(sqlHandler.getPlayerId);
 
+  app.route('/api/comparison/all')
+    .get(sqlHandler.getStatsAll);
+
 };
 
 // EOF -------------------------------------------------------------------------

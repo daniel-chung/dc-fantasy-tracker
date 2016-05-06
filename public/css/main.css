@@ -31,13 +31,22 @@ button.fbs-btn-unselected {
 
 
 /** Nav bar **/
-
 nav.fbs-navbar {
   background-color: #5bc0de;
 }
 
 nav.fbs-navbar * {
   color: #fff;
+}
+
+
+/** Footer **/
+div.fbs-footer {
+  background-color: #5bc0de;
+}
+div.fbs-footer * {
+  color: #fff;
+  /*font-size: 0.9em;*/
 }
 
 
@@ -68,6 +77,7 @@ div.fbs-pgplayer-content * {
 }*/
 div.fbs-pgplayer-content {
   display: inline-block;
+  width: 800px;
 }
 div.fbs-pgplayer-menu {
   position: absolute;
@@ -76,13 +86,15 @@ div.fbs-pgplayer-menu {
 }
 div.fbs-pgplayer-chart {
   position: relative;
-  overflow: visible;
   left: 10em;
-  width: 50vw;
+}
+div.fbs-pgplayer-chart > div {
+  display: inline-block;
+  padding: 2em;
+  border: 1px solid blue;
 }
 
-
 /** Player chart selector **/
-select.fbs-pgplayerchartselect {
+div.fbs-pgplayerchartselect {
   margin-top: 1em;
 }

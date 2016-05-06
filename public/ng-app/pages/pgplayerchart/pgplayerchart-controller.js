@@ -6,7 +6,7 @@ var FbsPgPlayerChart = angular.module('fbs.pgplayerchart', [
 ]);
 
 FbsPgPlayerChart.controller('fbs.pgplayerchart.pgplayerchartCtrl', function(
-    $scope, $rootScope, statschartFactory, pgPlayerData) {
+    $http, $scope, $rootScope, statschartFactory, pgPlayerData) {
   
   // Testing out root scope
   $rootScope.test = 'chart';
@@ -14,29 +14,85 @@ FbsPgPlayerChart.controller('fbs.pgplayerchart.pgplayerchartCtrl', function(
   // Initialize ng-model data for the chart dropdown menu
   $scope.chartstat = 'rbi';
 
-  // Initialize ng-model data for the checkbox
+  // Initialize ng-model data for the dropdown menu
   $scope.checkbox = 'raw';
+
+  // Initialize ng-model data for the dropdown menu
+  $scope.comp = 'nocomp';
   
   // Function that calls the service that creates a d3 visualization
   $scope.updateChart = function() {
-    statschartFactory.drawChart(pgPlayerData.map(function(e) {
-        if ($scope.checkbox == 'raw' || $scope.chartstat == 'obp') {
-          return {
-            age: e.age,
-            stat: e[$scope.chartstat]
-          };
+    if ($scope.comp == 'allpos') {
+      $http.get('/api/comparison/all')
+        .then(function(response) {
+          var pos = -1;
+          var minAge = pgPlayerData[0].age;
+          var maxAge = pgPlayerData[pgPlayerData.length - 1].age;
+          var formattedData = response.data.map(function(e, i, a) {
+            if (e.age >= minAge && e.age <= maxAge) {
+              pos++;
+              return {
+                age: e.age,
+                stat: ($scope.checkbox == 'raw' || $scope.chartstat == 'obp') ?
+                  Number(pgPlayerData[pos][$scope.chartstat]) :
+                  Number(pgPlayerData[pos][$scope.chartstat] * 162 / pgPlayerData[pos].g),
+                statcomp: Number(e[$scope.chartstat])
+              };
+            }
+            else {
+              return {
+                age: e.age,
+                stat: undefined,
+                statcomp: Number(e[$scope.chartstat])
+              };
+            }
+          });
+          statschartFactory.drawChart2(formattedData, '#chartid');
+
+          //console.log('formattedData', formattedData);
+          //console.log('pgPlayerData', pgPlayerData);
+          //console.log('grab comp', response.data);
+          //return response.data;
+        });
+    }
+
+    else {
+      var formattedData = pgPlayerData.map(function(e) {
+          if ($scope.checkbox == 'raw' || $scope.chartstat == 'obp') {
+            return {
+              age: e.age,
+              stat: e[$scope.chartstat]
+            };
+          }
+          else {
+            return {
+              age: e.age,
+              stat: (e[$scope.chartstat] * 162 / e.g)
+            };
+          }
         }
-        else {
-          return {
-            age: e.age,
-            stat: (e[$scope.chartstat] * 162 / e.g)
-          };
-        }
-      }), '#chartid');      
+      );
+      statschartFactory.drawChart(formattedData, '#chartid');
+    }
   };
+
 
   // Call the above chart on initial load
   $scope.updateChart();
+
+/*
+  // Grab comparison data
+  // WIP: need to update
+  $scope.grabComparison = function() {
+    $http.get('/api/comparison/all')
+      .then(function(response) {
+        console.log('pgPlayerData', pgPlayerData);
+        console.log('grab comp', response.data);
+        return response.data;
+      });
+  };
+*/
+
 });
 
 

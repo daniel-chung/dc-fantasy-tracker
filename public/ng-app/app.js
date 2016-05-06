@@ -9,13 +9,15 @@ var Application = angular.module('fbs.application', [
   'fbs.pgselect',
   'fbs.pgplayer',
   'fbs.navbar',
-  'fbs.pgplayerchart'
+  'fbs.footer',
+  'fbs.pgplayerchart',
+  'fbs.pgplayertable'
 ]);
 
 
 // Create a rootscope variable
 Application.run(function($rootScope) {
-    $rootScope.test = 'placeholder';
+  $rootScope.test = ''; //placeholder';
 });
 
 
@@ -53,7 +55,7 @@ Application.config(function ($stateProvider, $urlRouterProvider) {
           views: {
             'main': {
               templateUrl: "ng-app/pages/pgplayertable/pgplayertable.html",
-              controller: function($rootScope) { $rootScope.test = 'table'; }
+              controller: 'fbs.pgplayertable.pgplayertableCtrl'
             }
           }
       })
