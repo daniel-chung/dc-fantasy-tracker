@@ -7,6 +7,14 @@ body {
   text-align: center;
 }
 
+body.backgroundImage {
+  background-image: url("../img/background.jpeg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: bottom right; 
+  background-size: 100% 100%;
+}
+
 div#main {
   width: 80%;
   text-align: left;
@@ -32,7 +40,8 @@ button.fbs-btn-unselected {
 
 /** Nav bar **/
 nav.fbs-navbar {
-  background-color: #5bc0de;
+  background-color: rgba(70,70,70,.55);
+  border-bottom: 1px solid #CCC;
 }
 
 nav.fbs-navbar * {
@@ -42,7 +51,8 @@ nav.fbs-navbar * {
 
 /** Footer **/
 div.fbs-footer {
-  background-color: #5bc0de;
+  background-color: rgba(70,70,70,.5);
+  border-top: 1px solid #CCC;
 }
 div.fbs-footer * {
   color: #fff;
@@ -54,6 +64,12 @@ div.fbs-footer * {
 button.fbs-pgselect-btn {
   /*margin-right: 20px;*/
   margin-bottom: .25em;
+}
+
+
+/** Landing page styles **/
+div.fbs-landing {
+  color: #FFF;
 }
 
 

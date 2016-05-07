@@ -60,28 +60,29 @@ function SqlHandler (pg) {
     req.query = 
       'SELECT ' +
       '  age, ' +
-      '  r * 162 / g r, ' +
-      '  hr * 162 / g hr, ' +
-      '  rbi * 162 / g rbi, ' +
-      '  sb * 162 / g sb, ' +
-      '  obp ' +
+      '  AVG(r) r, ' +
+      '  AVG(hr) hr, ' +
+      '  AVG(rbi) rbi, ' +
+      '  AVG(sb) sb, ' +
+      '  AVG(obp) obp ' +
       'FROM ( ' +
       '  SELECT ' +
       '    age, ' +
-      '    sum(g) g, ' +
-      '    sum(r) r, ' +
-      '    sum(hr) hr, ' +
-      '    sum(rbi) rbi, ' +
-      '    sum(sb) sb, ' +
-      '    avg(obp) obp ' +
+      '    (r * 162/g) r, ' +
+      '    (hr * 162/g) hr, ' +
+      '    (rbi * 162/g) rbi, ' +
+      '    (sb * 162/g) sb, ' +
+      '    obp ' +
       '  FROM batting ' +
-      '  GROUP BY 1' +
+      '  WHERE ' +
+      '    age < 41 AND ' +
+      '    g > 41 ' +
       ') AS a ' +
+      'GROUP BY 1' +
       'ORDER BY 1 asc;';
     returnQuery(req, res);
   };  // End get player by id method ---------------------------------------- //
 };
-  
 
 // Export the handler class ----------------------------------------------------
 module.exports = SqlHandler;

@@ -9,7 +9,8 @@ FbsPgPlayerChart.controller('fbs.pgplayerchart.pgplayerchartCtrl', function(
     $http, $scope, $rootScope, statschartFactory, pgPlayerData) {
   
   // Testing out root scope
-  $rootScope.test = 'chart';
+  $rootScope.navMessage = 'Chart view';
+  $rootScope.showBackgroundImage = '';
 
   // Initialize ng-model data for the chart dropdown menu
   $scope.chartstat = 'rbi';

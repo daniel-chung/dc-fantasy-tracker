@@ -6,6 +6,7 @@
 // Use namespace 'fbs' for fantasy baseball statistics
 var Application = angular.module('fbs.application', [
   'ui.router',
+  'fbs.pglanding',
   'fbs.pgselect',
   'fbs.pgplayer',
   'fbs.navbar',
@@ -17,7 +18,7 @@ var Application = angular.module('fbs.application', [
 
 // Create a rootscope variable
 Application.run(function($rootScope) {
-  $rootScope.test = ''; //placeholder';
+  $rootScope.navMessage = '';
 });
 
 
@@ -31,6 +32,7 @@ Application.config(function ($stateProvider, $urlRouterProvider) {
     .state('pglanding', {
       url: "/",
       templateUrl: "ng-app/pages/pglanding/pglanding.html",
+      controller: 'fbs.pglanding.pglandingCtrl'
     })
     .state('pgselect', {
       url: "/select",

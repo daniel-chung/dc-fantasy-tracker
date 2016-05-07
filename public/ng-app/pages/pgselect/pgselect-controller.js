@@ -4,7 +4,11 @@
 var FbsPgSelect = angular.module('fbs.pgselect', []);
 
 FbsPgSelect.controller('fbs.pgselect.pgselectCtrl', function(
-    $scope, $interval, pgselectFactory) {
+    $scope, $rootScope, $interval, pgselectFactory) {
+
+  // Update the root scope
+  $rootScope.navMessage = 'Pick a player to analyze!';
+  $rootScope.showBackgroundImage = '';
 
   // Initialize the ng-model data for the list of available players
   $scope.players = [];
