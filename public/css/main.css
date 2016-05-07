@@ -111,6 +111,12 @@ div.fbs-landing-intro {
   border-radius: 10px;
   height:  225px;
   padding: 14px;
+  text-align: center;
+}
+.fbs-landing-intro-text {
+  height: 30px;
+}
+.fbs-landing-icon {
 }
 
 
