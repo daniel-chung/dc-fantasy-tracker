@@ -1,5 +1,13 @@
 /* /public/css/main.css */
 
+/* --------------------------------------------------------------------------
+   Shared components
+   -------------------------------------------------------------------------- */
+
+.test {
+  border: 1px solid red;
+}
+
 body {
   font-family: sans-serif;
   font-size: 14px;
@@ -7,7 +15,7 @@ body {
   text-align: center;
 }
 
-body.backgroundImage {
+body.landingPage {
   background-image: url("../img/background.jpeg");
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -16,7 +24,6 @@ body.backgroundImage {
 }
 
 div#main {
-  width: 80%;
   text-align: left;
 }
 
@@ -29,7 +36,6 @@ select {
   border: 1px solid #ccc;
 } 
 
-
 /** Unselected button **/
 button.fbs-btn-unselected {
   background-color: #fff;
@@ -38,42 +44,88 @@ button.fbs-btn-unselected {
 }
 
 
-/** Nav bar **/
+/* --------------------------------------------------------------------------
+   Nav bar
+   -------------------------------------------------------------------------- */
 nav.fbs-navbar {
-  background-color: rgba(70,70,70,.55);
-  border-bottom: 1px solid #CCC;
+  background-color: #5bc0de;
+  border-bottom: 1px solid #46b8da;
 }
-
 nav.fbs-navbar * {
   color: #fff;
 }
+nav.navbar-light .navbar-nav > li > a:hover,
+nav.navbar-light .navbar-nav > li > a:focus {
+  background-color: #EEE;
+  color: #5bc0de;
+}
+
+/* Change formatting for landing page */
+nav.fbs-navbar.landingPage {
+  background-color: rgba(70,70,70,.55);
+  border-bottom: 1px solid #CCC;
+}
+nav.fbs-navbar.landingPage * {
+  color: #fff;
+}
+nav.navbar-light.landingPage .navbar-nav > li > a:hover,
+nav.navbar-light.landingPage .navbar-nav > li > a:focus {
+  background-color: rgba(204,204,204,.55);
+  color: #fff;
+}
 
 
-/** Footer **/
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
 div.fbs-footer {
-  background-color: rgba(70,70,70,.5);
+  background-color: white;
   border-top: 1px solid #CCC;
 }
 div.fbs-footer * {
+  color: #777;
+}
+
+/* Change formatting for landing page */
+div.fbs-footer.landingPage {
+  background-color: rgba(70,70,70,.5);
+  border-top: 1px solid #CCC;
+}
+div.fbs-footer.landingPage * {
   color: #fff;
-  /*font-size: 0.9em;*/
 }
 
 
-/** Players component styles **/
+/* --------------------------------------------------------------------------
+   Landing page
+   -------------------------------------------------------------------------- */
+div.fbs-landing {
+  color: #FFF;
+}
+div.fbs-landing-container {
+  text-align: center;
+}
+div.fbs-landing-intro {
+  margin-top: 3em;
+  border: 3px solid white;
+  border-radius: 10px;
+  height:  225px;
+  padding: 14px;
+}
+
+
+/* --------------------------------------------------------------------------
+   Player select
+   -------------------------------------------------------------------------- */
 button.fbs-pgselect-btn {
   /*margin-right: 20px;*/
   margin-bottom: .25em;
 }
 
 
-/** Landing page styles **/
-div.fbs-landing {
-  color: #FFF;
-}
-
-
-/** Player styles **/
+/* --------------------------------------------------------------------------
+   Player page
+   -------------------------------------------------------------------------- */
 div.fbs-pgplayer-title * {
   display: inline-block;
 }
@@ -86,11 +138,6 @@ div.fbs-pgplayer-title a {
   vertical-align: middle;
 }
 
-
-/* For testing position
-div.fbs-pgplayer-content * {
-  border: 1px solid red;
-}*/
 div.fbs-pgplayer-content {
   display: inline-block;
   width: 800px;
@@ -110,7 +157,11 @@ div.fbs-pgplayer-chart > div {
   border: 1px solid blue;
 }
 
-/** Player chart selector **/
+
+/* --------------------------------------------------------------------------
+   Player chart selector
+   -------------------------------------------------------------------------- */
 div.fbs-pgplayerchartselect {
   margin-top: 1em;
 }
+

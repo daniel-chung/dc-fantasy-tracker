@@ -8,7 +8,7 @@ FbsPgLanding.controller('fbs.pglanding.pglandingCtrl', function(
 
   // Update the root scope
   $rootScope.navMessage = 'You\'re home!';
-  $rootScope.showBackgroundImage = 'backgroundImage';
+  $rootScope.isLandingPage = 'landingPage';
 });
 
 

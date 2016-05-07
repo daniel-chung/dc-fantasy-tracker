@@ -8,7 +8,7 @@ FbsPgPlayerTable.controller('fbs.pgplayertable.pgplayertableCtrl', function(
 
   // Update the root scope
   $rootScope.navMessage = 'Tabular view';
-  $rootScope.showBackgroundImage = '';
+  $rootScope.isLandingPage = '';
 });
 
 

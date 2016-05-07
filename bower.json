@@ -7,6 +7,7 @@
     "angular-ui-router": "latest",
   	"bootstrap": "latest",
     "jquery": "latest",
-    "d3": "latest"
+    "d3": "latest",
+    "components-font-awesome": "latest"
   }
 }
