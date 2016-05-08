@@ -22,10 +22,10 @@ function SqlHandler (pg) {
         return res.status(500).json({ success: false, data: err});
       }
 
-      //if (req.hasOwnProperty('queryVal'))
       var results = req.hasOwnProperty('queryVal') ?
         client.query(req.query, [req.queryVal]) : client.query(req.query);
 
+      console.log(req.query, [req.queryVal]);
       // Stream results back one row at a time
       results.on('row', function(row) {
         data.push(row);
@@ -80,6 +80,38 @@ function SqlHandler (pg) {
       ') AS a ' +
       'GROUP BY 1' +
       'ORDER BY 1 asc;';
+    returnQuery(req, res);
+  };  // End get player by id method ---------------------------------------- //
+
+
+  // Get average stats by position ------------------------------------------ //
+  this.getStatsPos = function(req, res) {
+    req.query = 
+      'SELECT ' +
+      '  age, ' +
+      '  AVG(r) r, ' +
+      '  AVG(hr) hr, ' +
+      '  AVG(rbi) rbi, ' +
+      '  AVG(sb) sb, ' +
+      '  AVG(obp) obp ' +
+      'FROM ( ' +
+      '  SELECT ' +
+      '    age, ' +
+      '    (r * 162/g) r, ' +
+      '    (hr * 162/g) hr, ' +
+      '    (rbi * 162/g) rbi, ' +
+      '    (sb * 162/g) sb, ' +
+      '    obp ' +
+      '  FROM batting ' +
+      '  WHERE ' +
+      '    age < 41 AND ' +
+      '    g > 41 AND ' +
+      '    pos ~ $1 ' +
+      ') AS a ' +
+      'GROUP BY 1' +
+      'ORDER BY 1 asc;';
+    req.queryVal = req.params.pos;
+    console.log(req.queryVal, req.params.pos);
     returnQuery(req, res);
   };  // End get player by id method ---------------------------------------- //
 };

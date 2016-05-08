@@ -1,11 +1,11 @@
 // /public/ng-app/pages/pgplayerchart/pgplayerchart-controller.js
 
 
-var FbsPgPlayerChart = angular.module('fbs.pgplayerchart', [
-  'fbs.statschart'
+var fbtPgPlayerChart = angular.module('fbt.pgplayerchart', [
+  'fbt.statschart'
 ]);
 
-FbsPgPlayerChart.controller('fbs.pgplayerchart.pgplayerchartCtrl', function(
+fbtPgPlayerChart.controller('fbt.pgplayerchart.pgplayerchartCtrl', function(
     $http, $scope, $rootScope, statschartFactory, pgPlayerData) {
   
   // Testing out root scope
@@ -22,8 +22,8 @@ FbsPgPlayerChart.controller('fbs.pgplayerchart.pgplayerchartCtrl', function(
 
   // Function that calls the service that creates a d3 visualization
   $scope.updateChart = function() {
-    if ($scope.comp == 'allpos') {
-      $http.get('/api/comparison/all')
+    if ($scope.comp != 'nocomp') {
+      $http.get('/api/comparison/' + $scope.comp)
         .then(function(response) {
           var pos = -1;
           var minAge = pgPlayerData[0].age;
@@ -35,7 +35,8 @@ FbsPgPlayerChart.controller('fbs.pgplayerchart.pgplayerchartCtrl', function(
                 age: e.age,
                 stat: ($scope.checkbox == 'raw' || $scope.chartstat == 'obp') ?
                   Number(pgPlayerData[pos][$scope.chartstat]) :
-                  Number(pgPlayerData[pos][$scope.chartstat] * 162 / pgPlayerData[pos].g),
+                  Number(pgPlayerData[pos][$scope.chartstat] * 162 /
+                    pgPlayerData[pos].g),
                 statcomp: Number(e[$scope.chartstat])
               };
             }
@@ -47,7 +48,8 @@ FbsPgPlayerChart.controller('fbs.pgplayerchart.pgplayerchartCtrl', function(
               };
             }
           });
-          statschartFactory.drawChart(formattedData, '#chartid', $scope.chartstat);
+          statschartFactory.drawChart(
+            formattedData, '#chartid', $scope.chartstat);
         });
     }
 
@@ -70,7 +72,6 @@ FbsPgPlayerChart.controller('fbs.pgplayerchart.pgplayerchartCtrl', function(
       statschartFactory.drawChart(formattedData, '#chartid', $scope.chartstat);
     }
   };
-
 
   // Call the above chart on initial load
   $scope.updateChart();

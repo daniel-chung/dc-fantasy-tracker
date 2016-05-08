@@ -21,7 +21,7 @@ Fantasy Baseball Tracker (FBT) is a web application that allows users to view an
 1. Getting started:
 --------------------------------------------------------------------------------
 
-There are two ways to get started with FBT:
+There are two ways to get started with FBT.
 
 
 1.0 Heroku:
@@ -137,9 +137,6 @@ You can start a production server by running the following command:
   $ npm start
 
 
-
 --------------------------------------------------------------------------------
 EOF
 --------------------------------------------------------------------------------
-
-

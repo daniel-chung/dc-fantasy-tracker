@@ -1,7 +1,7 @@
 <div>
   <!-- Drop down menu to toggle between d3 visualizations -->
-  <div class="fbs-pgplayerchartselect">
-  Baseball statistic:
+  <div class="fbt-pgplayerchartselect">
+  Baseball statistic to visualize:
     <select ng-model="chartstat"
             ng-change="updateChart()">
       <option value="r">R</option>
@@ -13,7 +13,7 @@
   </div>
 
   <!-- Drop down menu to toggle between raw and adjusted stats -->
-  <div class="fbs-pgplayerchartselect">
+  <div class="fbt-pgplayerchartselect">
     Adjust stats for number of games:
     <select ng-model="checkbox"
             ng-change="updateChart()">
@@ -23,16 +23,20 @@
   </div>
 
   <!-- Drop down menu to toggle between comparison -->
-  <div class="fbs-pgplayerchartselect">
-    Compare with other players:
+  <div class="fbt-pgplayerchartselect">
+    Compare with averages:
     <select ng-model="comp"
             ng-change="updateChart()">
       <option value="nocomp">No comp</option>
-      <option value="allpos">All positions</option>
+      <option value="all">All positions</option>
+      <option value="2">Catchers</option>
+      <option value="3">1B</option>
+      <option value="4">2B</option>
+      <option value="5">3B</option>
+      <option value="6">SS</option>
+      <option value="7">LF</option>
+      <option value="8">CF</option>
+      <option value="9">RF</option>
     </select>
   </div>
-
-
-  <!--  <div ng-init="grabComparison()">test</div> -->
-
 </div>

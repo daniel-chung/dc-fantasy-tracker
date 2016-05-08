@@ -30,6 +30,9 @@ module.exports = function(app, pg) {
   app.route('/api/comparison/all')
     .get(sqlHandler.getStatsAll);
 
+  app.route('/api/comparison/:pos')
+    .get(sqlHandler.getStatsPos);
+
 };
 
 // EOF -------------------------------------------------------------------------

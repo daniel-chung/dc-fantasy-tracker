@@ -1,9 +1,9 @@
 // /public/ng-app/pages/pgselect/pgselect-factory.js
 
 
-var FbsPgSelect = angular.module('fbs.pgselect');
+var fbtPgSelect = angular.module('fbt.pgselect');
 
-FbsPgSelect.service('pgselectFactory', function(
+fbtPgSelect.service('pgselectFactory', function(
     $http) {
   this.getPlayers = function() {
     return $http({

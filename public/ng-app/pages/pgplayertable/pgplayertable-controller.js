@@ -1,9 +1,9 @@
 // /public/ng-app/pages/pgplayertable/pgplayertable-controller.js
 
 
-var FbsPgPlayerTable = angular.module('fbs.pgplayertable', []);
+var fbtPgPlayerTable = angular.module('fbt.pgplayertable', []);
 
-FbsPgPlayerTable.controller('fbs.pgplayertable.pgplayertableCtrl', function(
+fbtPgPlayerTable.controller('fbt.pgplayertable.pgplayertableCtrl', function(
     $rootScope) {
 
   // Update the root scope

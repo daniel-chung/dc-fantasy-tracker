@@ -32,7 +32,6 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
       createTable();
     });
 
-
   // Create table
   function createTable() {
     var sqlcreate = "";
@@ -51,7 +50,6 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
       });
   };
 
-
   // Read in the datafile to populate our SQL table
   function insertRows() {
     var datafile = __dirname + '/players.csv';
@@ -68,7 +66,6 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
       client.end();
     });
   };
-
 
   // Function for inserting sql data
   function insertRow(pgclient, tblname, schema, data) {
@@ -99,7 +96,6 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
       console.log('Deletion successful 2');
       createBattingTable();
     });
-
 
   // Create table
   function createBattingTable() {
@@ -139,7 +135,6 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
         insertBattingRows();
       });
   };
-
 
   // Read in the datafile to populate our SQL table
   function insertBattingRows() {

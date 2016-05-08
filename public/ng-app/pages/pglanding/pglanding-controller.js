@@ -1,9 +1,9 @@
 // /public/ng-app/pages/pglanding/pglanding-controller.js
 
 
-var FbsPgLanding = angular.module('fbs.pglanding', []);
+var fbtPgLanding = angular.module('fbt.pglanding', []);
 
-FbsPgLanding.controller('fbs.pglanding.pglandingCtrl', function(
+fbtPgLanding.controller('fbt.pglanding.pglandingCtrl', function(
     $rootScope) {
 
   // Update the root scope

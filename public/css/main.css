@@ -42,18 +42,18 @@ div.horizonal-line {
 }
 
 /** Configure bootstrap buttons **/
-button.fbs-btn {
+button.fbt-btn {
   margin-bottom: .25em;
   background-color: #0A350A;
   border: 2px solid #CCC;
 }
-button.fbs-btn:hover,
-button.fbs-btn.focus,
-button.fbs-btn:focus,
-button.fbs-btn:active,
-button.fbs-btn:active:focus,
-button.fbs-btn:active.focus,
-button.fbs-btn.active.focus {
+button.fbt-btn:hover,
+button.fbt-btn.focus,
+button.fbt-btn:focus,
+button.fbt-btn:active,
+button.fbt-btn:active:focus,
+button.fbt-btn:active.focus,
+button.fbt-btn.active.focus {
   background-color: #EEE;
   border: 2px solid #0A350A;
   color: #0A350A;
@@ -64,11 +64,14 @@ button.fbs-btn.active.focus {
 /* --------------------------------------------------------------------------
    Nav bar
    -------------------------------------------------------------------------- */
-nav.fbs-navbar {
+span.fbt-navbar-brand {
+  margin: 0 1.5em;
+}
+nav.fbt-navbar {
   background-color: #0A350A;     /* Dark Green */
   border-bottom: 1px solid #CCC;
 }
-nav.fbs-navbar * {
+nav.fbt-navbar * {
   color: #fff;
 }
 nav.navbar-light .navbar-nav > li > a:hover,
@@ -78,11 +81,11 @@ nav.navbar-light .navbar-nav > li > a:focus {
 }
 
 /* Change formatting for landing page */
-nav.fbs-navbar.landingPage {
+nav.fbt-navbar.landingPage {
   background-color: rgba(70,70,70,.55);
   border-bottom: 1px solid #CCC;
 }
-nav.fbs-navbar.landingPage * {
+nav.fbt-navbar.landingPage * {
   color: #fff;
 }
 nav.navbar-light.landingPage .navbar-nav > li > a:hover,
@@ -95,20 +98,20 @@ nav.navbar-light.landingPage .navbar-nav > li > a:focus {
 /* --------------------------------------------------------------------------
    Footer
    -------------------------------------------------------------------------- */
-div.fbs-footer {
+div.fbt-footer {
   background-color: white;
   border-top: 1px solid #CCC;
 }
-div.fbs-footer * {
+div.fbt-footer * {
   color: #777;
 }
 
 /* Change formatting for landing page */
-div.fbs-footer.landingPage {
+div.fbt-footer.landingPage {
   background-color: rgba(70,70,70,.5);
   border-top: 1px solid #CCC;
 }
-div.fbs-footer.landingPage * {
+div.fbt-footer.landingPage * {
   color: #fff;
 }
 
@@ -116,17 +119,17 @@ div.fbs-footer.landingPage * {
 /* --------------------------------------------------------------------------
    Landing page
    -------------------------------------------------------------------------- */
-div.fbs-landing {
+div.fbt-landing {
   color: #FFF;
 }
-div.fbs-intro {
+div.fbt-intro {
   margin-bottom: -1.4em;
   font-size: 1.7em;
 }
-div.fbs-landing-container {
+div.fbt-landing-container {
   text-align: center;
 }
-div.fbs-landing-intro {
+div.fbt-landing-intro {
   margin-top: 3em;
   border: 3px solid white;
   border-radius: 10px;
@@ -134,20 +137,20 @@ div.fbs-landing-intro {
   padding: 14px;
   text-align: center;
 }
-.fbs-landing-intro-text {
+.fbt-landing-intro-text {
   height: 30px;
 }
-.fbs-landing-icon {
+.fbt-landing-icon {
 }
-a.fbs-landing-link:hover,
-a.fbs-landing-link {
+a.fbt-landing-link:hover,
+a.fbt-landing-link {
   color: #fff;
 }
 
 /* --------------------------------------------------------------------------
    Player select
    -------------------------------------------------------------------------- */
-div.fbs-pgselect-header {
+div.fbt-pgselect-header {
   border-bottom: 2px solid #ccc;
 }
 
@@ -155,32 +158,32 @@ div.fbs-pgselect-header {
 /* --------------------------------------------------------------------------
    Player page
    -------------------------------------------------------------------------- */
-div.fbs-pgplayer-title * {
+div.fbt-pgplayer-title * {
   display: inline-block;
 }
-div.fbs-pgplayer-title h1 {
+div.fbt-pgplayer-title h1 {
   margin: 0 1em 0 0;
   vertical-align: middle;
 }
-div.fbs-pgplayer-title a {
+div.fbt-pgplayer-title a {
   margin: 0 .5em 0 0;
   vertical-align: middle;
 }
 
-div.fbs-pgplayer-content {
+div.fbt-pgplayer-content {
   display: inline-block;
   width: 800px;
 }
-div.fbs-pgplayer-menu {
+div.fbt-pgplayer-menu {
   position: absolute;
   display: block;
   width: 10em;
 }
-div.fbs-pgplayer-chart {
+div.fbt-pgplayer-chart {
   position: relative;
   left: 10em;
 }
-div.fbs-pgplayer-chart > div {
+div.fbt-pgplayer-chart > div {
   display: inline-block;
   padding: 2em;
 }
@@ -189,7 +192,7 @@ div.fbs-pgplayer-chart > div {
 /* --------------------------------------------------------------------------
    Player chart selector
    -------------------------------------------------------------------------- */
-div.fbs-pgplayerchartselect {
+div.fbt-pgplayerchartselect {
   margin-top: 1em;
 }
 

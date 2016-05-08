@@ -1,27 +1,35 @@
 <!-- /public/index.html -->
 <!DOCTYPE html>
-<html lang="en" ng-app="fbs.application" ng-cloak>
+<html lang="en" ng-app="fbt.application" ng-cloak>
 <head>
 
   <meta charset="UTF-8">
   <title>Fantasy baseball statistics</title>
 
-  <!-- CSS -->
+<!-- CSS Libraries -->
+  <!-- Prod
+  <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="libs/components-font-awesome/css/font-awesome.min.css"> -->
+
+  <!-- Dev -->
   <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.css">
-  <link rel="stylesheet" href="libs/components-font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="libs/components-font-awesome/css/font-awesome.css">
+
+  <!-- Main Application CSS -->
   <link rel="stylesheet" href="css/main.css">
 
 </head>
 <body ng-class="isLandingPage">
 
+<!-- Content -->
   <div id="main">
-    <fbs-navbar></fbs-navbar>
+    <fbt-navbar></fbt-navbar>
     <br>
     
     <div ui-view></div>
     <br>
 
-    <fbs-footer></fbs-footer>
+    <fbt-footer></fbt-footer>
   </div>
 
 <!-- JS -->
@@ -47,7 +55,6 @@
   <script src="ng-app/pages/pgselect/pgselect-factory.js"></script>
   <script src="ng-app/pages/pgplayer/pgplayer-controller.js"></script>
   <script src="ng-app/components/navbar/navbar-directive.js"></script>
-  <script src="ng-app/components/navbar/navbar-controller.js"></script>
   <script src="ng-app/components/footer/footer-directive.js"></script>
   <script src="ng-app/components/footer/footer-controller.js"></script>
   <script src="ng-app/pages/pgplayerchart/pgplayerchart-controller.js"></script>

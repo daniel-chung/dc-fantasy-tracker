@@ -1,10 +1,10 @@
 // /public/ng-app/pages/pgselect/pgselect-controller.js
 
 
-var FbsPgSelect = angular.module('fbs.pgselect', []);
+var fbtPgSelect = angular.module('fbt.pgselect', []);
 
-FbsPgSelect.controller('fbs.pgselect.pgselectCtrl', function(
-    $scope, $rootScope, $interval, pgselectFactory) {
+fbtPgSelect.controller('fbt.pgselect.pgselectCtrl', function(
+    $scope, $rootScope, pgselectFactory) {
 
   // Update the root scope
   $rootScope.isLandingPage = '';

@@ -1,5 +1,5 @@
 <div>
-  <div class="fbs-pgselect-header">
+  <div class="fbt-pgselect-header">
     <h1>Batters</h1>
     <h3>Select a player to analyze:</h3>
   </div>
@@ -10,7 +10,7 @@
   <div>
     <a ng-repeat='popularPlayer in popularPlayers'
        ui-sref="pgplayer.table({pid: popularPlayer.id})">
-      <button type="button" class="btn btn-info fbs-btn">
+      <button type="button" class="btn btn-info fbt-btn">
         {{popularPlayer.name}}
       </button>
     </a>
@@ -24,10 +24,9 @@
   <div>
     <a ng-repeat='player in players'
        ui-sref="pgplayer.table({pid: player.id})">
-      <button type="button" class="btn btn-info fbs-btn">
+      <button type="button" class="btn btn-info fbt-btn">
         {{player.name}}
       </button>
     </a>
   </div>
-
 </div>

@@ -1,11 +1,11 @@
 // /public/ng-app/components/footer/footer-controller.js
 
 
-var FbsFooter = angular.module('fbs.footer');
+var fbtFooter = angular.module('fbt.footer');
 
-FbsFooter.controller('fbs.footer.footerCtrl', function($scope) {  
+fbtFooter.controller('fbt.footer.footerCtrl', function($scope) {  
   $scope.footerText = 
-  	'Built by Daniel Chung. Final project for Harvard CS50E.';
+    'Built by Daniel Chung. Final project for Harvard CS50E.';
 });
 
 

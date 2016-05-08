@@ -50,7 +50,7 @@ This is picked up on line 18 of our server. When we are running our development 
     app.use(morgan('dev'));
   }
 
-On line line 25, we assign the root directory of the host to be our "public folder":
+On line line 25, we assign the root directory of the host to be the "/final/public" folder:
 
   app.use(express.static(__dirname + '/public'));
 
@@ -62,12 +62,262 @@ Finally, on line 33, we start our node/express application.
 1.1 final/server/routes.js
 --------------------------------------------------------------------------------
 
+This is where we describe the server-side routes and API end points.
+
+Because we are heavily relying on client-side routing, we only specify one server-side route on line 13:
+
+  app.route('/')
+    .get(function(req, res) {
+      res.sendFile('index.html');
+  });
+
+We're leveraging the Express framework to specify that all GET requests to our host's route should return the index.html file. Since we've defined the root directory to be "/final/public", the file that we're actually returning is "/final/public/index.html". We'll describe this in more detail in section 2.
+
+We have several API end points, which all start with "/api" for organziation. They all work similarly--the path specified will return a JSON data that's the result of running the method attached to the "sqlHandler" class, which is described below (Section 1.2).
+
+
+1.2 final/server/controllers/sql-controller.js
+--------------------------------------------------------------------------------
+
+The "sql-controller.js" file is a node module. This is essentially a javascript version of a class. We define the funtion "SqlHandler", which contains 3 methods that correspond to our API endpoints:
+
+  * getPlayersAll - Returns a list all player objects containing their id and name.
+  * getPlayerId - Returns a specific player's stats using the player ID which is passed in as a parameter
+  * getStatsAll - Returns the statistic that averages all players for comparison.
+
+These end points can be tested out by typing in the routes into your brower. If you're running a local server, the following address will return the list of all players as a object containing their id and name:
+
+  http://localhost:8080/api/alldata
+
+
+--------------------------------------------------------------------------------
+2. Client Architecture
+--------------------------------------------------------------------------------
+
+
+2.0 final/public/index.html
+--------------------------------------------------------------------------------
+
+This is the main html file that's sent over by the server when a user first access the host's root page (e.g., http://localhost:8080/).
+
+
+2.0.0 CSS files ----------------------------------------------------------------
+
+We load either the full or minified versions of the Bootstrap and Font Awesome css files (lines 10-16).
+
+And on line 19, we load our custom CSS file.
+
+
+2.0.1 JS files -----------------------------------------------------------------
+
+We load the various javascript libraries we use as either the full or minified files on lines 36-49. Then on lines 51 to 63 we load the angular modules we wrote for this application.
+
+
+2.0.2 Angular directives -------------------------------------------------------
+
+On lines 26 and 32, we plug in custom Angular directives. These are HTML templates we wrote. Using Angular, we can turn those HTML snippets into a tag that we can inject, which makes our code more reuseable and the HTML files more expressive. The directives are:
+
+  * <fbt-navbar></fbt-navbar>
+  * <fbt-footer></fbt-footer>
+
+
+2.0.3 Angular Router (Part 1) --------------------------------------------------
+
+Angular UI Router allows us to set up client-side routing. What this means is that we can change the URL routes (as if we are going to a new page) without actually refreshing the page. The content that changes will be restricted inside the
+  
+  <div ui-view></div>
+
+tag on line 29. The UI Router is set up in app.js, detailed in the next section (2.1.0).
+
+
+2.1 final/public/ng-app/app.js
+--------------------------------------------------------------------------------
+
+The "app.js" file is the main angular application. We give it the name "fbt.application", which we used in line 3 of our index.html file using an ng-app attribute:
+
+  <html lang="en" ng-app="fbt.application" ng-cloak>
+
+We also declare the dependencies, which are other angular modules we wrote to handle user interactions.
+
+
+2.1.0 Angular Router (Part 2)
+--------------------------------------------------------------------------------
+
+Other than setting up the application and linking dependencies, the other main purpose of the app.js file is to configure the Angular Router (starting on line 20).
+
+line 23:
+  $urlRouterProvider.otherwise("/");
+
+  This sends any route that's not explicitly provided by the Angular Router to the root. However, these routes are angular routes, which start with "#/".
+
+  The host's root path (http://localhost:8080/) will send a request to the server. It will load the index.html code before calling the app.js script, which will correctly redirect us to Angular's root path (http://localhost:8080/#/).
+
+  Similarly, typing in an erroneous route after the "#/" will trigger the above code and bring us back to (http://localhost:8080/#/). Test this out by navigating to "http://localhost:8080/#/error".
+
+  However, going to "http://localhost:8080/error" will cause an error because we don't have a route specified in our server for this path, and the $urlRouterProvider.otherwise code does not fire because it does not recognize it as an Angular path.
+
+line 25:
+  $stateProvider
+    .state('pglanding', {
+      url: "/",
+      templateUrl: "ng-app/pages/pglanding/pglanding.html",
+      controller: 'fbt.pglanding.pglandingCtrl'
+    })
+
+  $stateProvider allows us to define states, which the Angular UI router uses to correctly render the appropriate template (i.e., HTML snippet) and the controller (javscript code to help use interact with the HTML).
+
+  In the above snippet, we gave the name "pglanding" (which stands for landing page, pg is for page, not PostgreSQL) to the Angular route "/". So whenever we navigate to http://localhost:8080/#/, the template defined by the templateUrl is loaded into the div tag with ui-view attribute in our index.html file:
+
+    <div ui-view></div>
+
+  Additionally, the controller defined by controller is bound to this template. So the $scope used in the controller is accessible within the template. This allows us to define functions that can be called by the template or store variables that hold values to keep track of appropriate interaction and behaviors to show in the template.
+
+line 36
+  .state('pgplayer', {
+    abstract: true,
+    url: "/player/:pid",
+    templateUrl: "ng-app/pages/pgplayer/pgplayer.html",
+    controller: 'fbt.pgplayer.pgplayerCtrl',
+    resolve: {
+      pgPlayerData: function($http, $stateParams) {
+        return $http.get('/api/' + $stateParams.pid).then(function(response) {
+          return response.data;
+        });
+      }
+    }
+  })
+
+  Here we defined an abstract state. This means we can't actually access the url. The reason we have an abstract state is to have a wrapper around its child states (defined on lines 49 and 58). The advantage is that we can pass down the data we request inside the "resolve" section. Specifically the pgPlayerData object will contain a specific player's statistics, which the child states can reference (in displaying it in a tabular or chart format).
+
+  Because abstract states can't be accessed, we route any requests to one of its children states. On line 22, we default requests to the "pgplayer.table" state, which has the "/player/:pid/table" url:
+
+    $urlRouterProvider.when("/player/:pid", "/player/:pid/table");
+
+
+2.1 final/public/ng-app/components
+--------------------------------------------------------------------------------
+
+This directory defines the two directive components I used in index.html.
+
+
+2.1.0 final/public/ng-app/components/navbar
+--------------------------------------------------------------------------------
+
+"navbar.html" file contains the html snippet that is rendered in place of the <fbt-navbar> tag in our "index.thml" file. It leverages Bootstrap's navbar classes.
+
+  * ng-class attribute in our top-most nav element allows us to conditionally add or remove classes. The "isLandingPage" model is defined on the $rootScope so the navbar can access the value. It is modified by the various controllers uner the "/public/ng-app/pages" directory. This allows us to add additional CSS styling to the navigation bar depending on which page the user on.
+
+  * We use the "ui-sref" attribute in our anchor tags (rather than the default href) to ensure compatability with our Angular UI Router. We simply have to define the state name we want to transition to, rather than writing out the full url.
+
+"navbar-directive.html" defines the Angular directive.
+  * line 8 specifies that this directive must be an element. I prefered having the element because the tags seem clearer and cleaner in our index.html file.
+  * line 9 specifies the template I'm using for this directive.
+
+
+2.1.1 final/public/ng-app/components/footer
+--------------------------------------------------------------------------------
+
+The footer is structured very similarly to the navbar. The only difference is I added a controller. Currently all it does is to store the text content that's displayed in the footer as a variable, which is called by the HTML template.
+
+
+2.2 final/public/ng-app/pages
+--------------------------------------------------------------------------------
+
+Each folder under /final/public/ng-app/pages/ corresponds to a state defined in our app.js file. This helped me organzie files logically and make the more modular.
+
+
+2.2.0 final/public/ng-app/pages/pglanding
+--------------------------------------------------------------------------------
+
+This contains the View and the Controller of the main landing page. In the controller, we assign the isLandingPage model with the 'landingPage' value. As explained in section 2.1.0, this adds the '.landingPage' class to our navbar, which gives additional CSS styles, which are defined in our /final/public/css/main.css file (lines 83-95). We also modify the footer's styles in the same manner, and the CSS styles are defined on lines 109-116.
+
+
+2.2.1 final/public/ng-app/pages/pgselect
+--------------------------------------------------------------------------------
+
+We direct users from the landing page to this one, where they are asked to select a player to analyze.
+
+pgselect-factory.js defines a service, which sends an HTTP GET request to our server API requesting data from the /api/alldata endpoint. This contains a list of all available players and their ids.
+
+pgselect-controller.js calls this service (line 26). Since our service just returns the $http service, we call the service in our controller. However, the $http service returns a promise, which is resolved by chaining the ".then()" method with a callback function to update our "players" model with the returned data.
+
+pgselect.html file loops over all of the players in the "players" model and creates a clickable button. It does something similar with our predefined "popularPlayers" model. As we've seen in the navbar, our anchor tags here are routed using "ui-sref". The one difference is we're passing in a parameter value along with the state we want to transition to. This will allow us to retrieve the relevant player's statistics because the pgplayer state (defined on line 44 of /final/public/app.js) will take the parameter and retrieve the data from our /api/:id endpoint.
+
+
+2.2.2 final/public/ng-app/pages/pgplayer
+--------------------------------------------------------------------------------
+
+This is our template for our abstract state. When we navigate to this url, our Angular UI Router will redirect us to the default table child state because of the following line from our app.js file (line 30):
+
+  $urlRouterProvider.when("/player/:pid", "/player/:pid/table");
+
+However, this template will still be rendered inside the following tags in our index.html page:
+
+  <div ui-view></div>
+
+Which means the title containing the player's name and the navigation buttons (to switch between the table and chart view) defined on lines 6-20 will stay put as we flip between the two child states.
+
+So the children's state templates will be rendered as a nested view. Rather than updating the main ui-view div tag on the index.html page, they will be rendered inside the ui-views defined in this file (/final/public/ng-app/pages/pgplayer/pgplayer.html).
+
+We have two named nested views (lines 28-33):
+
+  <div ui-view="dropdown"></div>
+  <div ui-view="main"></div>
+
+Since the pgplayer.table state only has a view named "main", nothing will be rendered in the <div ui-view="dropdown"></div> tag. Here's the pgplayer.table state definition found on app.js file:
+
+  .state('pgplayer.table', {
+      url: '/table',
+      views: {
+        'main': {
+          templateUrl: "ng-app/pages/pgplayertable/pgplayertable.html",
+          controller: 'fbt.pgplayertable.pgplayertableCtrl'
+        }
+      }
+  })
+
+However, the /final/public/ng-app/pages/pgplayertable/pgplayertable.html will be rendered inside the <div ui-view="main"></div> tag.
+
+
+The main purpose of the pgplayer-controller.js file sets the pgPlayerData response to the playerStats model, which is used in setting the player's name as the title and by the child classes.
+
+
+2.2.3 final/public/ng-app/pages/pgplayertable
+--------------------------------------------------------------------------------
+
+We use the playerStats model that's defined by pgplayer-controller.js and leverage Angular's ng-repeat directive to create a table.
 
 
 
+2.2.4 final/public/ng-app/pages/pgplayerchart
+--------------------------------------------------------------------------------
+
+The pgplayerchart.html simply creates a div where we'll be inserting our visualization.
+
+The pgplayerchartselect.html defines various dropdown menus which the user can use to change and update the visualization. This html file is defined as the "dropdown" view of the pgplayer.chart state in app.js:
+
+  .state('pgplayer.chart', {
+    url: '/chart',
+    views: {
+      'dropdown': {
+        templateUrl: "ng-app/pages/pgplayerchart/pgplayerchartselect.html",
+        controller: 'fbt.pgplayerchart.pgplayerchartCtrl'
+      },
+      'main': {
+        templateUrl: "ng-app/pages/pgplayerchart/pgplayerchart.html",
+        controller: 'fbt.pgplayerchart.pgplayerchartCtrl'
+      }
+    }
+  })
+
+The pgplayerchart-controller.js defines the models that the pgplayerchartselect.html view uses and keeps track of them to render the correct visualization. It also defines the "updatechart" method which calls a service that creates the d3 visualization.
+  * The "updatechart" method will pass in the current players data to the visualization service if the user selects "No comp" option in the last drop down menu.
+  * Otherwise, it calls our API endpoint to get the comparison data before coupling that with the current player's data to create a combined visualization.
 
 
+2.3 final/public/ng-app/services
+--------------------------------------------------------------------------------
 
-
+This folder contains one file "statschart-factory.js" that defines the service for creating the d3 visualization.
 
 
