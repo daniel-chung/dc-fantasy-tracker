@@ -9,7 +9,7 @@ function SqlHandler (pg) {
   var returnQuery = function(req, res) {
 
     // For testing locally
-    if (process.env.VERSION != "DEV")
+    if (process.env.VERSION == "PROD")
       pg.defaults.ssl = true;
 
     // Connect to Postgres

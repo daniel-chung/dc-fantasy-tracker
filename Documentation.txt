@@ -1,11 +1,10 @@
 Documentation.txt
 
-
 Project: FBT - Fantasy Baseball Tracker
 Author: Daniel Chung
 
 --------------------------------------------------------------------------------
-1. Overview: 
+0. Overview: 
 --------------------------------------------------------------------------------
 
 Fantasy Baseball Tracker (FBT) is a web application that allows users to view and track different baseball players' statistics for fantasy baseball. It is built using the following technologies:
@@ -19,30 +18,35 @@ Fantasy Baseball Tracker (FBT) is a web application that allows users to view an
 
 
 --------------------------------------------------------------------------------
-2. Getting started:
+1. Getting started:
 --------------------------------------------------------------------------------
 
 There are two ways to get started with FBT:
 
 
-2.1 Heroku:
+1.0 Heroku:
 --------------------------------------------------------------------------------
 You can head over to https://dc-fantasy-tracker.herokuapp.com to see the current version of the application deployed to Heroku.
 
 
-2.2 Launching locally:
+1.1 Launching locally:
 --------------------------------------------------------------------------------
 
-2.2.1 Pre-requisites: ----------------------------------------------------------
+1.1.0 Pre-requisites: ----------------------------------------------------------
 
 You need to install node.js and PostgreSQL on your computer.
   * node.js: Head over to https://nodejs.org/en/ to download the v.4.4.4 LTS version of node.
+
+  * Nodemon (optional): I use nodemon (https://github.com/remy/nodemon), which watches for changes and reloads the server for development purposes. You can install it globally using npm by running the following command:
+
+    $ sudo npm install -g nodemon
+
   * PostgreSQL: Use a package manager to install PostgreSQL. If using a Mac, I recommend using homebrew (http://brew.sh/). You can simply type:
 
     $ brew install postgres
 
 
-2.2.2 Setting up PostgreSQL: ---------------------------------------------------
+1.1.1 Setting up PostgreSQL: ---------------------------------------------------
 
 Once you have install PostgreSQL, you can launch your local server by typing the following commands into the terminal if you had installed PostgreSQL using homebrew:
 
@@ -59,7 +63,7 @@ Then in a different terminal window, you need to create a database. You can use 
   * And the last argument gives a name to the database, which I am calling "fantasy_db".
 
 
-2.2.3 Setting up Node.js and NPM: ----------------------------------------------
+1.1.2 Setting up Node.js and NPM: ----------------------------------------------
 
 NPM is the node package manager (https://www.npmjs.com/). This allows us to install various packages that I use to extend the functionality of my node.js application.
 
@@ -77,7 +81,7 @@ Now you can install all of the packages by simply typing the following command:
   $ npm install
 
 
-2.3 In depth look into npm & package.json
+1.2 In depth look into npm & package.json
 --------------------------------------------------------------------------------
 
 The "npm install" command use the "package.json" file to figure out what packages to install. Specifically, it will install every listed package, which are the keys in the "dependencies" object.
@@ -87,7 +91,7 @@ After the packages are installed, npm will then run the commands specified in th
   $ ./node_modules/bower/bin/bower install && node server/config/postgres.js
 
 
-2.3.1 Initializing Bower packages: ---------------------------------------------
+1.2.0 Initializing Bower packages: ---------------------------------------------
 
 Bower is a package manager similar to NPM. The difference is Bower focuses on managing front-end packages.
 
@@ -97,7 +101,7 @@ So the first part of the command identified in section 2.3 installs the packages
   * ".bowerrc" file allows us to specify where to save out the package files.
 
 
-2.3.2 Initializing our database: -----------------------------------------------
+1.2.1 Initializing our database: -----------------------------------------------
 
 We have two csv files that countain our data, which you can find at:
   /final/server/config
@@ -108,9 +112,34 @@ So the second part of the command identified in section 2.3 runs the "postgres.j
 
 One in particular I want to mention is the dotenv package required by the file on line 8. This package allows us to substitute environmental values into our files, using the "process.env.NAME" template where NAME is the variable name found in the ".env" file.
 
-This allows us to upload files to public repositories (e.g., github) without exposing sensitive information like API keys and AUTH secrets.
+One benefit is this allows us to upload files to public repositories (e.g., github) without exposing sensitive information like API keys and AUTH secrets. Since we're not using particularly sensitive information, this allows us to configure some application level global variables that can be accessed by node.
+
+
+1.3 Starting a local server
+--------------------------------------------------------------------------------
+
+To start up the project, you must have your postgreSQL server running. If it isn't you can re-start it using the following command:
+
+  $ postgres -D /usr/local/var/postgres
+
+
+1.3.0 Starting a development server --------------------------------------------
+
+You can start a development server using nodemon, which watches for any changes in your files by running the following command:
+
+  $ npm run start:dev
+
+
+1.3.1 Starting a production server ---------------------------------------------
+
+You can start a production server by running the following command:
+
+  $ npm start
 
 
 
+--------------------------------------------------------------------------------
+EOF
+--------------------------------------------------------------------------------
 
 

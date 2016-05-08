@@ -1,0 +1,73 @@
+Documentation.txt
+
+Project: FBT - Fantasy Baseball Tracker
+Author: Daniel Chung
+
+--------------------------------------------------------------------------------
+0. Overview: 
+--------------------------------------------------------------------------------
+
+Fantasy baseball tracker is a full-stack web application that uses the following technologies:
+  * node.js (Server)
+  * express (Web framework for node)
+  * PostgreSQL (Database)
+  * Angularjs (Front end framework)
+  * Angular UI Router (Client-side routing and state management)
+  * d3.js (Visualization)
+  * Bootstrap (UI elements)
+  * Font Awesome (Icons)
+
+  The server mainly provides RESTful API end points. When these API end points are accessed, they query a PostgreSQL server and returns the result in JSON format.
+
+  While we're using node to power our application, we're layering the Expess framework (http://expressjs.com/) on top of node to make our lives easier.
+
+  The user interaction and routing is handled by Angular, and specifically the Angular UI Router. I heavily used client-side routing (rather than doing it on the server-side) because there are many user events that only requires a subset of the web site to be reloaded--so using AJAX methods (as provided by Angular's $http service) made sense and provided better user interface.
+
+  I used d3 because it is a very commonly used library to provide visualizations on the web.
+
+  Most SQL flavors contained all of the functionality I required for my use case. Because Heroku (the service I'm using to deploy my application) supports PostgreSQL out of the box, I decided to use it.
+
+  Finally, Bootstrap and Font Awesome were used to give me layouts, components, and icons to quickly make my site look beautiful.
+
+
+--------------------------------------------------------------------------------
+1. Server Architecture
+--------------------------------------------------------------------------------
+
+
+1.0 final/server.js
+--------------------------------------------------------------------------------
+
+The main node server is contained in the following file:
+
+  /final/server.js
+
+As described in the Documentation, we use the "dotenv" module to allow us to configure environmental variables and make them reuseable. We can also pass environment variables by setting them before running node, as you can see on line 10 of package.json, where we set VERSION to be "DEV" when running our development server.
+
+This is picked up on line 18 of our server. When we are running our development server we activate a library called "morgan" which logs additional information to our terminal:
+
+  if (process.env.VERSION == "DEV") {
+    app.use(morgan('dev'));
+  }
+
+On line line 25, we assign the root directory of the host to be our "public folder":
+
+  app.use(express.static(__dirname + '/public'));
+
+We create an express application on line 13. Then on line 29, we're linking the file call routes.js, which contain the routes, to our express application. More detail can be found in the next section.
+
+Finally, on line 33, we start our node/express application.
+
+
+1.1 final/server/routes.js
+--------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+

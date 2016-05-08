@@ -2,12 +2,9 @@
 'use strict';
 
 // Load packages ---------------------------------------------------------------
-var express         = require('express');           // express app
-var session         = require('express-session');   // session for cookies
-var cookieParser    = require('cookie-parser');     // parse cookies
-var morgan          = require('morgan');            // for debugging
-var bodyParser      = require('body-parser');       // for forms
-var pg              = require('pg');             // for data model
+var express         = require('express');  // express app
+var morgan          = require('morgan');   // for debugging
+var pg              = require('pg');       // for data model
 
 require('dotenv').load();     // allows us to use .env for security
 
@@ -17,23 +14,10 @@ var app = express();
 var port = process.env.PORT || 8080;
 
 
-// Other configurations
-app.use(morgan('dev'));                                           // log every request to the console
-app.use(bodyParser.urlencoded({'extended':'true'}));              // parse application/x-www-form-urlencoded
-app.use(bodyParser.json());                                       // parse application/json
-app.use(bodyParser.json({ type: 'application/vnd.api+json' }));   // parse application/vnd.api+json as json
-
-app.use(cookieParser());                                          // set up session
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true,
-  httpOnly: false,
-}));
-
-
-// Setup postgres sql ----------------------------------------------------------
-//require('./server/config/postgres')(pg);
+// log every request to the console in development version
+if (process.env.VERSION == "DEV") {
+  app.use(morgan('dev'));
+}
 
 
 // Routing links ---------------------------------------------------------------
