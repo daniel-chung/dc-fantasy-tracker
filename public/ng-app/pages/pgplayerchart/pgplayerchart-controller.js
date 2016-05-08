@@ -19,7 +19,7 @@ FbsPgPlayerChart.controller('fbs.pgplayerchart.pgplayerchartCtrl', function(
 
   // Initialize ng-model data for the dropdown menu
   $scope.comp = 'nocomp';
-  
+
   // Function that calls the service that creates a d3 visualization
   $scope.updateChart = function() {
     if ($scope.comp == 'allpos') {
@@ -47,7 +47,7 @@ FbsPgPlayerChart.controller('fbs.pgplayerchart.pgplayerchartCtrl', function(
               };
             }
           });
-          statschartFactory.drawChart(formattedData, '#chartid');
+          statschartFactory.drawChart(formattedData, '#chartid', $scope.chartstat);
         });
     }
 
@@ -67,7 +67,7 @@ FbsPgPlayerChart.controller('fbs.pgplayerchart.pgplayerchartCtrl', function(
           }
         }
       );
-      statschartFactory.drawChart(formattedData, '#chartid');
+      statschartFactory.drawChart(formattedData, '#chartid', $scope.chartstat);
     }
   };
 

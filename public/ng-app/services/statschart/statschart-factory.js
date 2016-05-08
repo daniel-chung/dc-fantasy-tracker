@@ -2,16 +2,25 @@
 
 angular.module('fbs.statschart', [])
   .service('statschartFactory', function($http) {
-    this.drawChart = function(data, chartid) {
+    this.drawChart = function(data, chartid, statname) {
+
+      var statTranslation = {
+        "r": "Runs",
+        "hr": "Home Runs",
+        "rbi": "Runs Batted In",
+        "sb": "Stolen Bases",
+        "obp": "On Base Percentage"
+      }
+
       var w = 500;
       var h = 300;
       var m = {
-        top: 20,
-        right: 20,
-        bottom: 20,
+        top: 40,
+        right: 50,
+        bottom: 40,
         left: 50
       };
-      
+
       d3.selectAll("svg").remove();
 
       var svg = d3.select(chartid)
@@ -89,6 +98,18 @@ angular.module('fbs.statschart', [])
           .attr('stroke-width', 2)
           .attr('fill', 'none');
       }
+
+      svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("transform", "translate("+ (m.left/4) +","+ (m.top) +") rotate(-90)")
+        .text(statTranslation[statname]);
+
+      svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("transform", "translate("+ (w-m.right) +","+ (h - m.bottom/4) +")")
+        .text("age");
+
+
     };
 
   });
