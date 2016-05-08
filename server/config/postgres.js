@@ -59,13 +59,10 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
     var eachLine = Promise.promisify(lineReader.eachLine);
 
     eachLine(datafile, function(line) {
-      //console.log(line);
       var rowdata = line.split(',');
-      //console.log('rowdata', rowdata);
       var insertresult = insertRow(client, 'players', playersSchema, rowdata);
     }).then(function() {
       console.log('done 1');
-//      setTimeout(function() { client.end(); }, 500);
     }).catch(function(err) {
       console.error(err);
       client.end();
@@ -155,9 +152,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
     eachLine(datafile, function(line) {
       counter++;
       if (counter > 0) {
-        //console.log(line);
         var rowdata = line.split(',');
-        //clean up floats
         for (var j = 4; j < 17; j++) {
           rowdata[j] = rowdata[j].replace(/\.\d*/, '');
           if (rowdata[j] == '') {
@@ -169,7 +164,6 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
             rowdata[k] = '0.0'; 
           }
         }
-        //console.log('rowdata', rowdata);
         var insertresult = insertRow(client, 'batting', playersSchema, rowdata);
       }
     }).then(function() {
@@ -181,16 +175,6 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
       client.end();
   });
 };
-
-
-
-
-
-
-
-
-
-
 
 });
 

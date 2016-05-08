@@ -1,5 +1,5 @@
 {
-  "name": "fantasy_baseball_viewer",
+  "name": "fantasy_baseball_tracker",
   "version": "1.0.0",
   "description": "Shows baseball players' fantasy statistics",
   "main": "server.js",
