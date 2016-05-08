@@ -18,9 +18,9 @@ body {
 body.landingPage {
   background-image: url("../img/background.jpeg");
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: bottom right; 
-  background-size: 100% 100%;
+  background-attachment: scroll;
+  background-position: top right; 
+  background-size: 100vw 100vh; 
 }
 
 div#main {
@@ -36,20 +36,37 @@ select {
   border: 1px solid #ccc;
 } 
 
-/** Unselected button **/
-button.fbs-btn-unselected {
-  background-color: #fff;
-  border-color: #777;
-  color: #777;
+div.horizonal-line {
+  border-top: 2px solid #ccc;
+  margin: 2em 0;
 }
 
+/** Configure bootstrap buttons **/
+button.fbs-btn {
+  margin-bottom: .25em;
+  background-color: #0A350A;
+  border: 2px solid #CCC;
+}
+button.fbs-btn:hover,
+button.fbs-btn.focus,
+button.fbs-btn:focus,
+button.fbs-btn:active,
+button.fbs-btn:active:focus,
+button.fbs-btn:active.focus,
+button.fbs-btn.active.focus {
+  background-color: #EEE;
+  border: 2px solid #0A350A;
+  color: #0A350A;
+  text-decoration: none;
+  outline: 0;
+}
 
 /* --------------------------------------------------------------------------
    Nav bar
    -------------------------------------------------------------------------- */
 nav.fbs-navbar {
-  background-color: #5bc0de;
-  border-bottom: 1px solid #46b8da;
+  background-color: #0A350A;     /* Dark Green */
+  border-bottom: 1px solid #CCC;
 }
 nav.fbs-navbar * {
   color: #fff;
@@ -57,7 +74,7 @@ nav.fbs-navbar * {
 nav.navbar-light .navbar-nav > li > a:hover,
 nav.navbar-light .navbar-nav > li > a:focus {
   background-color: #EEE;
-  color: #5bc0de;
+  color: #0A350A;
 }
 
 /* Change formatting for landing page */
@@ -102,6 +119,10 @@ div.fbs-footer.landingPage * {
 div.fbs-landing {
   color: #FFF;
 }
+div.fbs-intro {
+  margin-bottom: -1.4em;
+  font-size: 1.7em;
+}
 div.fbs-landing-container {
   text-align: center;
 }
@@ -118,14 +139,16 @@ div.fbs-landing-intro {
 }
 .fbs-landing-icon {
 }
-
+a.fbs-landing-link:hover,
+a.fbs-landing-link {
+  color: #fff;
+}
 
 /* --------------------------------------------------------------------------
    Player select
    -------------------------------------------------------------------------- */
-button.fbs-pgselect-btn {
-  /*margin-right: 20px;*/
-  margin-bottom: .25em;
+div.fbs-pgselect-header {
+  border-bottom: 2px solid #ccc;
 }
 
 

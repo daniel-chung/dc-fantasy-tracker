@@ -1,11 +1,33 @@
 <div>
-  <h1>Player list</h1>
-  <h3>Click on the buttons below to find out more info:</h3>
+  <div class="fbs-pgselect-header">
+    <h1>Batters</h1>
+    <h3>Select a player to analyze:</h3>
+  </div>
+  <br>
+  <br>
 
-  <a ng-repeat='player in players'
-     ui-sref="pgplayer.table({pid: player.id})">
-    <button type="button" class="btn btn-info fbs-pgselect-btn">
-      {{player.name}}
-    </button>
-  </a>
+  <h3>A) Choose one of our favorite players:</h3>
+  <div>
+    <a ng-repeat='popularPlayer in popularPlayers'
+       ui-sref="pgplayer.table({pid: popularPlayer.id})">
+      <button type="button" class="btn btn-info fbs-btn">
+        {{popularPlayer.name}}
+      </button>
+    </a>
+  </div>
+
+  <br>
+  <div class="horizonal-line"></div>
+  <br>
+  
+  <h3>B) Or select a player from our full list:</h3>
+  <div>
+    <a ng-repeat='player in players'
+       ui-sref="pgplayer.table({pid: player.id})">
+      <button type="button" class="btn btn-info fbs-btn">
+        {{player.name}}
+      </button>
+    </a>
+  </div>
+
 </div>

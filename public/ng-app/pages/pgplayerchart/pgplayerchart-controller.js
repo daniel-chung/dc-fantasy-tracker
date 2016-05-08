@@ -9,7 +9,6 @@ FbsPgPlayerChart.controller('fbs.pgplayerchart.pgplayerchartCtrl', function(
     $http, $scope, $rootScope, statschartFactory, pgPlayerData) {
   
   // Testing out root scope
-  $rootScope.navMessage = 'Chart view';
   $rootScope.isLandingPage = '';
 
   // Initialize ng-model data for the chart dropdown menu
@@ -48,12 +47,7 @@ FbsPgPlayerChart.controller('fbs.pgplayerchart.pgplayerchartCtrl', function(
               };
             }
           });
-          statschartFactory.drawChart2(formattedData, '#chartid');
-
-          //console.log('formattedData', formattedData);
-          //console.log('pgPlayerData', pgPlayerData);
-          //console.log('grab comp', response.data);
-          //return response.data;
+          statschartFactory.drawChart(formattedData, '#chartid');
         });
     }
 
@@ -80,19 +74,6 @@ FbsPgPlayerChart.controller('fbs.pgplayerchart.pgplayerchartCtrl', function(
 
   // Call the above chart on initial load
   $scope.updateChart();
-
-/*
-  // Grab comparison data
-  // WIP: need to update
-  $scope.grabComparison = function() {
-    $http.get('/api/comparison/all')
-      .then(function(response) {
-        console.log('pgPlayerData', pgPlayerData);
-        console.log('grab comp', response.data);
-        return response.data;
-      });
-  };
-*/
 
 });
 

@@ -7,8 +7,7 @@
 
     <!-- Navigate to the table view -->
     <a ui-sref="pgplayer.table({pid: playerId})">
-      <button type="button" class="btn btn-info"
-              ng-class="fbsBtnTable" 
+      <button type="button" id="fbs-player-btn-table" class="btn btn-info fbs-btn"
               ng-click="changeClass('fbsBtnTable');">
         table
       </button>
@@ -16,8 +15,7 @@
 
     <!-- Navigate to the chart view -->
     <a ui-sref="pgplayer.chart({pid: playerId})">
-      <button type="button" class="btn btn-info"
-              ng-class="fbsBtnChart" 
+      <button type="button" id="fbs-player-btn-chart" class="btn btn-info fbs-btn"
               ng-click="changeClass('fbsBtnChart');">
         chart
       </button>

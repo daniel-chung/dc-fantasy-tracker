@@ -7,11 +7,20 @@ FbsPgSelect.controller('fbs.pgselect.pgselectCtrl', function(
     $scope, $rootScope, $interval, pgselectFactory) {
 
   // Update the root scope
-  $rootScope.navMessage = 'Pick a player to analyze!';
   $rootScope.isLandingPage = '';
 
   // Initialize the ng-model data for the list of available players
   $scope.players = [];
+
+  // Create a list of populat players
+  $scope.popularPlayers = [
+    {"id": 156, "name": "Derek Jeter"},
+    {"id": 44, "name": "Ben Zobrist"},
+    {"id": 487, "name": "Yoenis Cespedes"},
+    {"id": 12, "name": "Albert Pujols"},
+    {"id": 344, "name": "Mark Teixeira"},
+    {"id": 271, "name": "Joey Votto"}
+  ];
 
   // Retrieve the list of players from SQL and update the model
   pgselectFactory.getPlayers()

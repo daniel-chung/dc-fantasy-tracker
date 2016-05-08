@@ -7,8 +7,8 @@ FbsPgPlayerTable.controller('fbs.pgplayertable.pgplayertableCtrl', function(
     $rootScope) {
 
   // Update the root scope
-  $rootScope.navMessage = 'Tabular view';
   $rootScope.isLandingPage = '';
+
 });
 
 

@@ -7,7 +7,6 @@ FbsPgLanding.controller('fbs.pglanding.pglandingCtrl', function(
     $rootScope) {
 
   // Update the root scope
-  $rootScope.navMessage = 'You\'re home!';
   $rootScope.isLandingPage = 'landingPage';
 });
 
