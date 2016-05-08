@@ -25,7 +25,6 @@ function SqlHandler (pg) {
       var results = req.hasOwnProperty('queryVal') ?
         client.query(req.query, [req.queryVal]) : client.query(req.query);
 
-      console.log(req.query, [req.queryVal]);
       // Stream results back one row at a time
       results.on('row', function(row) {
         data.push(row);
@@ -111,7 +110,6 @@ function SqlHandler (pg) {
       'GROUP BY 1' +
       'ORDER BY 1 asc;';
     req.queryVal = req.params.pos;
-    console.log(req.queryVal, req.params.pos);
     returnQuery(req, res);
   };  // End get player by id method ---------------------------------------- //
 };
