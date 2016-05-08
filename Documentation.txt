@@ -1,0 +1,116 @@
+Documentation.txt
+
+
+Project: FBT - Fantasy Baseball Tracker
+Author: Daniel Chung
+
+--------------------------------------------------------------------------------
+1. Overview: 
+--------------------------------------------------------------------------------
+
+Fantasy Baseball Tracker (FBT) is a web application that allows users to view and track different baseball players' statistics for fantasy baseball. It is built using the following technologies:
+  * node.js & express (Server)
+  * PostgreSQL (Database)
+  * Angularjs (Front end framework)
+  * Angular UI Router (Client-side routing and state management)
+  * Bootstrap (UI elements)
+  * d3.js (Visualization)
+  * Font awesome (Icons)
+
+
+--------------------------------------------------------------------------------
+2. Getting started:
+--------------------------------------------------------------------------------
+
+There are two ways to get started with FBT:
+
+
+2.1 Heroku:
+--------------------------------------------------------------------------------
+You can head over to https://dc-fantasy-tracker.herokuapp.com to see the current version of the application deployed to Heroku.
+
+
+2.2 Launching locally:
+--------------------------------------------------------------------------------
+
+2.2.1 Pre-requisites: ----------------------------------------------------------
+
+You need to install node.js and PostgreSQL on your computer.
+  * node.js: Head over to https://nodejs.org/en/ to download the v.4.4.4 LTS version of node.
+  * PostgreSQL: Use a package manager to install PostgreSQL. If using a Mac, I recommend using homebrew (http://brew.sh/). You can simply type:
+
+    $ brew install postgres
+
+
+2.2.2 Setting up PostgreSQL: ---------------------------------------------------
+
+Once you have install PostgreSQL, you can launch your local server by typing the following commands into the terminal if you had installed PostgreSQL using homebrew:
+
+  $ postgres -D /usr/local/var/postgres
+
+Please change the last argument to where your PostgreSQL package lives if different.
+
+Then in a different terminal window, you need to create a database. You can use the following command:
+
+  $ createdb -O `whoami` -E utf8 fantasy_db
+
+  * The -O argument creates a user. I am using your default username by inserting the whoami command as the argument; the tickmarks will evaluate the command whoami before inserting the value to the main command.
+  * The -E argument specifies that the data will use the UTF-8 encoding, rather than ASCII.
+  * And the last argument gives a name to the database, which I am calling "fantasy_db".
+
+
+2.2.3 Setting up Node.js and NPM: ----------------------------------------------
+
+NPM is the node package manager (https://www.npmjs.com/). This allows us to install various packages that I use to extend the functionality of my node.js application.
+
+NPM ships with node. So if you successfully installed node as described in section  2.2.1, you should already have NPM. However, you can update NPM to the most up to date version as described in the documentation (https://docs.npmjs.com/getting-started/installing-node) by using the following command:
+
+  $ sudo npm install npm -g
+
+Once your npm is updated, you need to install all of necessary packages. First navigate back to the top of this project's directory (i.e., /final/)
+Make sure that the packaage.json file is visiable in the current directory. You can type the following comamnd to check:
+
+  $ ls
+
+Now you can install all of the packages by simply typing the following command:
+
+  $ npm install
+
+
+2.3 In depth look into npm & package.json
+--------------------------------------------------------------------------------
+
+The "npm install" command use the "package.json" file to figure out what packages to install. Specifically, it will install every listed package, which are the keys in the "dependencies" object.
+
+After the packages are installed, npm will then run the commands specified in the "postinstall" section inside the "scripts" object. Currently, we have two terminal commands joined by the "&&" operator:
+
+  $ ./node_modules/bower/bin/bower install && node server/config/postgres.js
+
+
+2.3.1 Initializing Bower packages: ---------------------------------------------
+
+Bower is a package manager similar to NPM. The difference is Bower focuses on managing front-end packages.
+
+So the first part of the command identified in section 2.3 installs the packages managed by Bower, with the help of the following files:
+
+  * "bower.json" file lists the packages to install under the "dependencies" object, just like NPM's "package.json".
+  * ".bowerrc" file allows us to specify where to save out the package files.
+
+
+2.3.2 Initializing our database: -----------------------------------------------
+
+We have two csv files that countain our data, which you can find at:
+  /final/server/config
+
+I have written a node.js script to upload our data to our postgres database called "postgres.js", which can be found in the same folder.
+
+So the second part of the command identified in section 2.3 runs the "postgres.js" file using the node program. The benefit of running the file using node is we can use the various node packages installed in section 2.2.3.
+
+One in particular I want to mention is the dotenv package required by the file on line 8. This package allows us to substitute environmental values into our files, using the "process.env.NAME" template where NAME is the variable name found in the ".env" file.
+
+This allows us to upload files to public repositories (e.g., github) without exposing sensitive information like API keys and AUTH secrets.
+
+
+
+
+
