@@ -76,7 +76,7 @@ angular.module('fbs.statschart', [])
 
       svg.append('path')
         .attr('d', lineFunc(data))
-        .attr('stroke', 'red')
+        .attr('stroke', '#0A350A')
         .attr('stroke-width', 2)
         .attr('fill', 'none');
 
@@ -85,7 +85,7 @@ angular.module('fbs.statschart', [])
         svg.append('path')
           .attr("class", "line")
           .attr('d', lineFuncComp(data))
-          .attr('stroke', '#5bc0de')
+          .attr('stroke', '#913C05')
           .attr('stroke-width', 2)
           .attr('fill', 'none');
       }
