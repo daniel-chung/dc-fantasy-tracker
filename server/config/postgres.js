@@ -174,7 +174,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
       }
     }).then(function() {
       console.log('done 2');
-      setTimeout(function() { client.end(); }, 5000);
+      setTimeout(function() { client.end(); }, 10000);
 
     }).catch(function(err) {
       console.error(err);
