@@ -37,7 +37,7 @@ You can head over to https://dc-fantasy-tracker.herokuapp.com to see the current
 You need to install node.js and PostgreSQL on your computer.
   * node.js: Head over to https://nodejs.org/en/ to download the v.4.4.4 LTS version of node.
 
-  * Nodemon (optional): I use nodemon (https://github.com/remy/nodemon), which watches for changes and reloads the server for development purposes. You can install it globally using npm by running the following command:
+  * Nodemon: I use nodemon (https://github.com/remy/nodemon), which watches for changes and reloads the server for development purposes. You can install it globally using npm by running the following command:
 
     $ sudo npm install -g nodemon
 
@@ -52,15 +52,17 @@ Once you have install PostgreSQL, you can launch your local server by typing the
 
   $ postgres -D /usr/local/var/postgres
 
-Please change the last argument to where your PostgreSQL package lives if different.
+Change the last argument to where your PostgreSQL package lives if it's different from above.
 
-Then in a different terminal window, you need to create a database. You can use the following command:
+In a separate terminal window, you need to create a database. You can use the following command:
 
   $ createdb -O `whoami` -E utf8 fantasy_db
 
-  * The -O argument creates a user. I am using your default username by inserting the whoami command as the argument; the tickmarks will evaluate the command whoami before inserting the value to the main command.
-  * The -E argument specifies that the data will use the UTF-8 encoding, rather than ASCII.
-  * And the last argument gives a name to the database, which I am calling "fantasy_db".
+    * The -O argument creates a user. I am using your default username by inserting the whoami command as the argument; the tickmarks will evaluate the command whoami before inserting the value to the main command.
+
+    * The -E argument specifies that the data will use the UTF-8 encoding, rather than ASCII.
+
+    * And the last argument gives a name to the database, which I am calling "fantasy_db".
 
 
 1.1.2 Setting up Node.js and NPM: ----------------------------------------------
@@ -71,17 +73,64 @@ NPM ships with node. So if you successfully installed node as described in secti
 
   $ sudo npm install npm -g
 
-Once your npm is updated, you need to install all of necessary packages. First navigate back to the top of this project's directory (i.e., /final/)
-Make sure that the packaage.json file is visiable in the current directory. You can type the following comamnd to check:
 
-  $ ls
+1.2 Starting a local server
+--------------------------------------------------------------------------------
 
-Now you can install all of the packages by simply typing the following command:
+To start up the project, you must have your postgreSQL server running. If it isn't you can re-start it using the following command:
 
-  $ npm install
+  $ postgres -D /usr/local/var/postgres
+
+Then in a new terminal window, navigate to the root directory final/ and find the "setup.sh" file. Ensure it's executable by running:
+
+  $ chmod u+x ./setup.sh
+
+Then run the shell script by typing:
+
+  $ ./setup.sh
+
+This script handles three tasks:
+
+  1. Recreates the /final/.env file, which contains our environment variables. Specifically, it sets the DATABASE_URL value in the following format:
+
+    postgres://[username]@localhost/fantasy_db
+
+  where [username] is your username, which you can find out by typing in the following command:
+
+    $ whoami
+
+  1.a. It also sets the default "VERSION" to "LOCAL"
+
+  2. Installs the necessary NPM packages by running:
+
+    $ npm install
+
+  Section 1.3 below explores this in greater detail.
+
+  3. Runs the "start:dev" command found in package.json, which sets the "VERSION" to "DEV" before starting a development server using nodemon.
+
+    $ npm run start:dev
 
 
-1.2 In depth look into npm & package.json
+1.2.0 Starting a development server --------------------------------------------
+
+Although the "setup.sh" file automatically starts a development server, if you need to you can manually start one by running the following command:
+
+  $ npm run start:dev
+
+This starts a server using the nodemon program, which watches for any changes in your files. Whenever a file is changed, it will restart the server. This makes it convenient to test out new features and see the changes on the fly while writing code. Additionally, because the environment variable "VERSION" is set to "DEV", there are additional logging information in our terminal to help with debugging.
+
+
+1.2.1 Starting a production server ---------------------------------------------
+
+You can start a production server by running the following command:
+
+  $ npm start
+
+This starts a server using base node, rather than nodemon. Additionally, the "VERSION" environment variable will be "LOCAL", rather than "DEV", which won't have all of the extra logging information.
+
+
+1.3 In depth look into npm & package.json
 --------------------------------------------------------------------------------
 
 The "npm install" command use the "package.json" file to figure out what packages to install. Specifically, it will install every listed package, which are the keys in the "dependencies" object.
@@ -91,19 +140,21 @@ After the packages are installed, npm will then run the commands specified in th
   $ ./node_modules/bower/bin/bower install && node server/config/postgres.js
 
 
-1.2.0 Initializing Bower packages: ---------------------------------------------
+1.3.0 Initializing Bower packages: ---------------------------------------------
 
 Bower is a package manager similar to NPM. The difference is Bower focuses on managing front-end packages.
 
 So the first part of the command identified in section 2.3 installs the packages managed by Bower, with the help of the following files:
 
   * "bower.json" file lists the packages to install under the "dependencies" object, just like NPM's "package.json".
+
   * ".bowerrc" file allows us to specify where to save out the package files.
 
 
-1.2.1 Initializing our database: -----------------------------------------------
+1.3.1 Initializing our database: -----------------------------------------------
 
 We have two csv files that countain our data, which you can find at:
+
   /final/server/config
 
 I have written a node.js script to upload our data to our postgres database called "postgres.js", which can be found in the same folder.
@@ -113,28 +164,6 @@ So the second part of the command identified in section 2.3 runs the "postgres.j
 One in particular I want to mention is the dotenv package required by the file on line 8. This package allows us to substitute environmental values into our files, using the "process.env.NAME" template where NAME is the variable name found in the ".env" file.
 
 One benefit is this allows us to upload files to public repositories (e.g., github) without exposing sensitive information like API keys and AUTH secrets. Since we're not using particularly sensitive information, this allows us to configure some application level global variables that can be accessed by node.
-
-
-1.3 Starting a local server
---------------------------------------------------------------------------------
-
-To start up the project, you must have your postgreSQL server running. If it isn't you can re-start it using the following command:
-
-  $ postgres -D /usr/local/var/postgres
-
-
-1.3.0 Starting a development server --------------------------------------------
-
-You can start a development server using nodemon, which watches for any changes in your files by running the following command:
-
-  $ npm run start:dev
-
-
-1.3.1 Starting a production server ---------------------------------------------
-
-You can start a production server by running the following command:
-
-  $ npm start
 
 
 --------------------------------------------------------------------------------
